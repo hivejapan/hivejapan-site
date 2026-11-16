@@ -1,8 +1,28 @@
 ---
 title: "HIVE JAPAN Summit 2025"
+gallery:
+  - "/images/1da0d04c.jpg"
+  - "/images/b3635be6.jpg"
+  - "/images/5c66289a.jpg"
+  - "/images/7341546b.jpg"
+  - "/images/f21aff65.jpg"
+  - "/images/56c8fbb6.jpg"
+  - "/images/940664eb.jpg"
+  - "/images/bd9ee5da.jpg"
+  - "/images/c8b695c2.jpg"
+  - "/images/a82299de.jpg"
+  - "/images/07150abd.jpg"
+  - "/images/3560197f.jpg"
+  - "/images/581bfcd9.jpg"
+  - "/images/167f4f94.jpg"
+  - "/images/9ec5910f.jpg"
+  - "/images/a5905670.jpg"
+  - "/images/d8c90c95.jpg"
+  - "/images/488b8d2d.jpg"
+  - "/images/b0b236af.jpg"
+  - "/images/c9d4a117.jpg"
+  - "/images/3ca68c1b.jpg"
 ---
-
-![](/images/1da0d04c.jpg)
 
 ## 集え、未来を創る志士たちよ。
 
@@ -15,26 +35,6 @@ HIVE JAPAN
 ─── ここは、仲間とともに日本の将来について本気になって議論する場。集え、未来を創る志士たちよ。
 
 来るべき未来、私たちがビジネスパーソンや、法曹や官僚、政治家、クリエイターなどになった後に、各々がそれぞれの場でリスクを取って既存の枠組みに挑戦出来るのは、HIVE JAPANで出来た強固な繋がりが挑戦へ対する障壁を無くしたり、集いの場で得られる幅広い知識がその挑戦への自信となるから。ここには同世代のユニークな仲間たちが揃っている。さあ、日本を変えるコミュニティのスタートラインを切ろう。
-
-![](/images/b3635be6.jpg)
-
-![](/images/5c66289a.jpg)
-
-![](/images/7341546b.jpg)
-
-![](/images/f21aff65.jpg)
-
-![](/images/56c8fbb6.jpg)
-
-![](/images/940664eb.jpg)
-
-![](/images/bd9ee5da.jpg)
-
-![](/images/c8b695c2.jpg)
-
-![](/images/a82299de.jpg)
-
-![](/images/07150abd.jpg)
 
 ## HIVE JAPAN Summit 2025とは
 
@@ -56,8 +56,6 @@ Hive Japan 2025のコミュニティ創りのスタートラインとなる熱�
 
 ## スペシャルゲスト
 
-![](/images/3560197f.jpg)
-
 ## 各務 茂夫 氏
 
 東京大学 大学院工学系研究科 教授／産学協創推進本部 副本部長
@@ -70,8 +68,6 @@ Hive Japan 2025のコミュニティ創りのスタートラインとなる熱�
 
 （2025年3月時点）
 
-![](/images/581bfcd9.jpg)
-
 ## 鈴木 寛 氏
 
 1964年生まれ。
@@ -81,8 +77,6 @@ Hive Japan 2025のコミュニティ創りのスタートラインとなる熱�
 慶應義塾大学助教授を経た後、国会議員を12年間、文部科学副大臣も2期務める。2015年より文部科学大臣補佐官を4期務め、アクティブ・ラーニングの導入を推進。新学習指導要領の改訂、40年ぶりの大学入学制度改革に尽力。
 
 現在は、東京大学教授、OECD教育2030理事など兼務。全国マイプロジェクト実行委員会 実行委員長。
-
-![](/images/167f4f94.jpg)
 
 ## 鈴木 健 氏
 
@@ -103,17 +97,3 @@ Sport & Do Resort リソルの森
 公式サイト： Sport & Do Resort リソルの森
 
 千葉県 長生郡長柄町 上野 521-4
-
-![](/images/9ec5910f.jpg)
-
-![](/images/a5905670.jpg)
-
-![](/images/d8c90c95.jpg)
-
-![](/images/488b8d2d.jpg)
-
-![](/images/b0b236af.jpg)
-
-![](/images/c9d4a117.jpg)
-
-![](/images/3ca68c1b.jpg)

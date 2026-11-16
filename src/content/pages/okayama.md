@@ -1,22 +1,18 @@
 ---
 title: "Hive Okayama"
+gallery:
+  - "/images/e3e00538.jpg"
+  - "/images/51e4087d.jpg"
+  - "/images/ff2d709b.jpg"
+  - "/images/31a62101.jpg"
+  - "/images/8eb70a75.jpg"
+  - "/images/8e4f17fc.jpg"
+  - "/images/2b385ae8.jpg"
+  - "/images/899d8d44.jpg"
+  - "/images/073f137e.jpg"
 ---
 
-![](/images/e3e00538.jpg)
-
-![](/images/51e4087d.jpg)
-
-![](/images/ff2d709b.jpg)
-
-![](/images/31a62101.jpg)
-
 ## 新しいリスト アイテム
-
-![](/images/8eb70a75.jpg)
-
-![](/images/8e4f17fc.jpg)
-
-![](/images/2b385ae8.jpg)
 
 ## HIVE OKAYAMA とは
 
@@ -32,8 +28,6 @@ title: "Hive Okayama"
 
 ## スペシャルゲスト
 
-![](/images/899d8d44.jpg)
-
 ## 伊原木 隆太 氏
 
 1990年3月東京大学工学部精密機械工学科を卒業。
@@ -43,8 +37,6 @@ title: "Hive Okayama"
 1998年5月、株式会社天満屋(岡山市)代表取締役社長に就任。
 
 2012年10月の岡山県知事選に初当選、現在4期目。
-
-![](/images/073f137e.jpg)
 
 ## 横井 篤文 氏
 

@@ -28,6 +28,14 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
     nav details summary { cursor:pointer; color:var(--muted); list-style:none; }
     nav details[open] ul { position:absolute; top:28px; left:0; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 14px; display:block; min-width:180px; z-index:20; }
     nav details[open] li { padding:3px 0; }
+    .menu-toggle, .menu-btn { display:none; }
+    @media (max-width:760px) {
+      .menu-btn { display:block; font-size:1.5rem; cursor:pointer; padding:4px 8px; }
+      nav { display:none; width:100%; padding-bottom:12px; }
+      .menu-toggle:checked ~ nav { display:block; }
+      nav ul { flex-direction:column; gap:10px; }
+      nav details[open] ul { position:static; border:none; padding:6px 0 0 14px; background:none; }
+    }
     main { padding:40px 0 64px; }
     main img { max-width:100%; height:auto; border-radius:6px; }
     h1 { font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.35; margin:0 0 24px; }
@@ -40,6 +48,8 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
   <header class="site">
     <div class="wrap">
       <a class="logo" href="/">Hive Japan</a>
+      <input type="checkbox" id="menu" class="menu-toggle" aria-label="メニューを開く" />
+      <label for="menu" class="menu-btn" aria-hidden="true">☰</label>
       <nav aria-label="メイン">
         <ul>
           {site.nav.map((n) => n.children ? (

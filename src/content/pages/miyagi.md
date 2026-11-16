@@ -1,26 +1,17 @@
 ---
 title: "Hive Miyagi"
+gallery:
+  - "/images/460d21e7.jpg"
+  - "/images/7645448c.jpg"
+  - "/images/ac43429d.jpg"
+  - "/images/dd31eda2.jpg"
+  - "/images/be5c82d9.jpg"
+  - "/images/1956ab18.jpg"
+  - "/images/c6fe0eb7.jpg"
+  - "/images/95837fe0.jpg"
+  - "/images/83c04f73.jpg"
+  - "/images/6efaa094.jpg"
 ---
-
-![](/images/460d21e7.jpg)
-
-![](/images/7645448c.jpg)
-
-![](/images/ac43429d.jpg)
-
-![](/images/dd31eda2.jpg)
-
-![](/images/be5c82d9.jpg)
-
-![](/images/1956ab18.jpg)
-
-![](/images/c6fe0eb7.jpg)
-
-![](/images/95837fe0.jpg)
-
-![](/images/83c04f73.jpg)
-
-![](/images/6efaa094.jpg)
 
 ## HIVE MIYAGIとは
 

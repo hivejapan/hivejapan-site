@@ -24,16 +24,16 @@ import imgs from '../home-images.json';
   <p>そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
   <p>「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
 
-  <div class="gallery">{imgs.slice(1, 9).map((src) => <img src={src} alt="" loading="lazy" />)}</div>
+  <div class="gallery">{imgs.map((src) => <img src={src} alt="" loading="lazy" />)}</div>
 
   <h2>Advisors</h2>
-  <div class="cards">
-    {people.advisors.map((p) => (<article class="card"><h4>{p.name}</h4><p class="role">{p.role}</p><p class="bio">{p.bio}</p></article>))}
+  <div class="cards advisors">
+    {people.advisors.map((p) => (<article class="card advisor">{p.photo && <img class="face" src={p.photo} alt={p.name} loading="lazy" />}<div><h4>{p.name}</h4><p class="role">{p.role}</p><p class="bio">{p.bio}</p></div></article>))}
   </div>
 
   <h2>運営メンバー</h2>
-  <div class="cards">
-    {people.members.map((p) => (<article class="card"><h4>{p.name}</h4>{p.role && <p class="role">{p.role}</p>}{p.bio && <p class="bio">{p.bio}</p>}{p.tags && <p class="tags">{p.tags}</p>}</article>))}
+  <div class="cards members">
+    {people.members.map((p) => (<article class="card">{p.photo && <img class="face" src={p.photo} alt={p.name} loading="lazy" />}<h4>{p.name}</h4>{p.role && <p class="role">{p.role}</p>}{p.bio && <p class="bio">{p.bio}</p>}{p.tags && <p class="tags">{p.tags}</p>}</article>))}
   </div>
 </Base>
 <style>
@@ -47,7 +47,13 @@ import imgs from '../home-images.json';
   .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin:32px 0; }
   .gallery img { aspect-ratio:3/2; object-fit:cover; width:100%; }
   .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+  .cards.advisors { grid-template-columns:1fr; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
+  .face { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px; margin-bottom:12px; display:block; }
+  .advisor { display:grid; grid-template-columns:120px 1fr; gap:16px; align-items:start; }
+  .advisor .face { margin:0; }
+  @media (max-width:600px) { .advisor { grid-template-columns:1fr; } .advisor .face { max-width:180px; } }
+  .cards.members { grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
   .card h4 { margin:0 0 4px; font-size:1.02rem; }
   .role { margin:0 0 8px; color:var(--muted); font-size:.85rem; }
   .bio { margin:0 0 8px; font-size:.9rem; }

@@ -1,8 +1,27 @@
 ---
 title: "HIVE JAPAN Summit 2026"
+gallery:
+  - "/images/1da0d04c.jpg"
+  - "/images/669ac602.jpg"
+  - "/images/4f6c0e51.jpg"
+  - "/images/2ef45151.jpg"
+  - "/images/951f1df6.jpg"
+  - "/images/892fb836.jpg"
+  - "/images/c3af68fd.jpg"
+  - "/images/88602f24.jpg"
+  - "/images/afcdab06.jpg"
+  - "/images/c8f690a6.jpg"
+  - "/images/b2753135.jpg"
+  - "/images/5871c35e.jpg"
+  - "/images/a734573c.jpg"
+  - "/images/9ec5910f.jpg"
+  - "/images/a5905670.jpg"
+  - "/images/d8c90c95.jpg"
+  - "/images/488b8d2d.jpg"
+  - "/images/b0b236af.jpg"
+  - "/images/c9d4a117.jpg"
+  - "/images/3ca68c1b.jpg"
 ---
-
-![](/images/1da0d04c.jpg)
 
 ## 集え、未来を創る志士たちよ。
 
@@ -15,22 +34,6 @@ HIVE JAPAN
 ─── ここは、仲間とともに日本の将来について本気になって議論する場。集え、未来を創る志士たちよ。
 
 来るべき未来、私たちがビジネスパーソンや、法曹や官僚、政治家、クリエイターなどになった後に、各々がそれぞれの場でリスクを取って既存の枠組みに挑戦出来るのは、HIVE JAPANで出来た強固な繋がりが挑戦へ対する障壁を無くしたり、集いの場で得られる幅広い知識がその挑戦への自信となるから。ここには同世代のユニークな仲間たちが揃っている。さあ、日本を変えるコミュニティのスタートラインを切ろう。
-
-![](/images/669ac602.jpg)
-
-![](/images/4f6c0e51.jpg)
-
-![](/images/2ef45151.jpg)
-
-![](/images/951f1df6.jpg)
-
-![](/images/892fb836.jpg)
-
-![](/images/c3af68fd.jpg)
-
-![](/images/88602f24.jpg)
-
-![](/images/afcdab06.jpg)
 
 ## HIVE JAPAN Summit 2026とは
 
@@ -54,15 +57,11 @@ HIVE JAPAN Summit 2026 Well-being イベントレポート
 
 イベントレポートを読む→
 
-![](/images/c8f690a6.jpg)
-
 ## HIVE JAPAN Summit 2026 テーマ
 
 ## パブリックマインド
 
 ## スペシャルゲスト
-
-![](/images/b2753135.jpg)
 
 ## 深井 龍之介 氏
 
@@ -71,8 +70,6 @@ HIVE JAPAN Summit 2026 Well-being イベントレポート
 九州大学文学部社会学研究室を卒業後、大手電機メーカーの経営企画部門に配属。
 
 2011年に独立後は、複数のスタートアップ・ベンチャー企業の経営に参画し、16年にCOTENを設立。 世界史データベースを開発中。
-
-![](/images/5871c35e.jpg)
 
 ## 高島 崚輔 氏
 
@@ -83,8 +80,6 @@ HIVE JAPAN Summit 2026 Well-being イベントレポート
 2016年から2023年まで（特非）グローバルな学びのコミュニティ・留学フェローシップ理事長。
 
 2023年4月、兵庫県芦屋市長選挙で初当選。同年5月より現職。公立学校の教育の質向上に力を注ぎ、ユース世代を含め、幅広い世代との対話を中心にしたまちづくりに取り組む。
-
-![](/images/a734573c.jpg)
 
 ## 津田 通隆 氏
 
@@ -105,17 +100,3 @@ Sport & Do Resort リソルの森
 公式サイト： Sport & Do Resort リソルの森
 
 千葉県 長生郡長柄町 上野 521-4
-
-![](/images/9ec5910f.jpg)
-
-![](/images/a5905670.jpg)
-
-![](/images/d8c90c95.jpg)
-
-![](/images/488b8d2d.jpg)
-
-![](/images/b0b236af.jpg)
-
-![](/images/c9d4a117.jpg)
-
-![](/images/3ca68c1b.jpg)
