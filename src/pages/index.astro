@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import people from '../data/people.json';
+import imgs from '../home-images.json';
+---
+<Base>
+  <section class="hero">
+    <video class="bg" autoplay muted loop playsinline poster={imgs[0]}><source src="/media/top.mp4" type="video/mp4" /></video>
+    <div class="hero-text">
+      <p class="eyebrow">誰も知らない「問い」に挑むあなたへ</p>
+      <h1>Hive Japan</h1>
+      <a class="btn" href="/summit-2026/">過去の開催情報はこちら</a>
+    </div>
+  </section>
+
+  <h2>Mission</h2>
+  <h3 class="lead">日本の未来を切り拓く</h3>
+  <p>Hive Japanは、「日本を良くしたい」と本気で考えている若者が立場を超えて志で繋がり、領域を超えた変革を共に起こせるような場を生み出すために、立ち上がりました。</p>
+  <p>志は共通しているが多様な領域で活躍する若者が、蜂の巣のように出入りをしながらも、この場で得た知見やネットワークをもとに各自の挑戦に活かして欲しいという意味合いを込めて、「Hive（蜂の巣）Japan」と名付けました。</p>
+  <p>Hive Japanがミッションに掲げているのは「日本の未来を切り拓く」です。</p>
+  <p>課題先進国と呼ばれるようになり、少しずつ沈んでいく「日本」に山積する社会課題を一つずつ解決して、日本に明るい未来をもたらすためには、日本を良くしたいと考える有志が領域を超えて変革を起こす必要があります。</p>
+  <p>Hive Japanに集まっているのは、まだ志半ばの若者であり、まだ社会に対して大きなインパクトを与える力はないかもしれません。しかし、それでも少しずつ我々の力で危機を乗り越え、新しい領域を開拓して、未来を切り拓いていきます。</p>
+  <p>いつの時代も、歴史を動かしてきたのは志高き少数のリーダーたちでした。幕末では、薩摩と長州を中心とした若きリーダーにより、国、そして世界をも動かしました。</p>
+  <p>そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
+  <p>「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
+
+  <div class="gallery">{imgs.slice(1, 9).map((src) => <img src={src} alt="" loading="lazy" />)}</div>
+
+  <h2>Advisors</h2>
+  <div class="cards">
+    {people.advisors.map((p) => (<article class="card"><h4>{p.name}</h4><p class="role">{p.role}</p><p class="bio">{p.bio}</p></article>))}
+  </div>
+
+  <h2>運営メンバー</h2>
+  <div class="cards">
+    {people.members.map((p) => (<article class="card"><h4>{p.name}</h4>{p.role && <p class="role">{p.role}</p>}{p.bio && <p class="bio">{p.bio}</p>}{p.tags && <p class="tags">{p.tags}</p>}</article>))}
+  </div>
+</Base>
+<style>
+  .hero { position:relative; min-height:56vh; display:grid; place-items:center; text-align:center; border-radius:10px; overflow:hidden; margin-bottom:24px; background:#111; }
+  .hero .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.55; }
+  .hero-text { position:relative; color:#fff; padding:40px 16px; }
+  .hero h1 { font-size:clamp(2.4rem,8vw,4.5rem); margin:8px 0 20px; }
+  .eyebrow { margin:0; letter-spacing:.08em; }
+  .btn { display:inline-block; padding:10px 22px; border:1px solid #fff; border-radius:999px; text-decoration:none; }
+  .lead { font-size:1.5rem; margin:4px 0 16px; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin:32px 0; }
+  .gallery img { aspect-ratio:3/2; object-fit:cover; width:100%; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
+  .card h4 { margin:0 0 4px; font-size:1.02rem; }
+  .role { margin:0 0 8px; color:var(--muted); font-size:.85rem; }
+  .bio { margin:0 0 8px; font-size:.9rem; }
+  .tags { margin:0; color:var(--accent); font-size:.82rem; }
+</style>

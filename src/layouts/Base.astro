@@ -1,0 +1,60 @@
+---
+import site from '../data/site.json';
+const { title, description = '「日本の未来を切り拓く」— 志ある若者が領域を超えて集うコミュニティ Hive Japan' } = Astro.props;
+const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style is:global>
+    :root { --ink:#1b1b1f; --muted:#5d5d66; --line:#e6e4df; --bg:#faf9f6; --accent:#c8851a; --card:#ffffff; }
+    @media (prefers-color-scheme: dark) { :root { --ink:#eeece8; --muted:#a8a6a0; --line:#2e2d2a; --bg:#161614; --card:#1f1e1c; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family: "Hiragino Sans","Noto Sans JP",system-ui,sans-serif; line-height:1.85; }
+    a { color:inherit; }
+    .wrap { max-width:960px; margin:0 auto; padding:0 20px; }
+    header.site { border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:10; }
+    header.site .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:60px; flex-wrap:wrap; }
+    .logo { font-weight:800; letter-spacing:.04em; text-decoration:none; font-size:1.15rem; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; gap:18px; flex-wrap:wrap; font-size:.92rem; }
+    nav li { position:relative; }
+    nav a { text-decoration:none; color:var(--muted); }
+    nav a:hover { color:var(--ink); }
+    nav details summary { cursor:pointer; color:var(--muted); list-style:none; }
+    nav details[open] ul { position:absolute; top:28px; left:0; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 14px; display:block; min-width:180px; z-index:20; }
+    nav details[open] li { padding:3px 0; }
+    main { padding:40px 0 64px; }
+    main img { max-width:100%; height:auto; border-radius:6px; }
+    h1 { font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.35; margin:0 0 24px; }
+    h2 { font-size:1.3rem; margin:48px 0 12px; padding-top:10px; position:relative; }
+    h2::before { content:""; position:absolute; top:0; left:0; width:80px; border-top:2px solid var(--accent); }
+    footer { border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:.85rem; }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a class="logo" href="/">Hive Japan</a>
+      <nav aria-label="メイン">
+        <ul>
+          {site.nav.map((n) => n.children ? (
+            <li><details><summary>{n.label} ▾</summary><ul>{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
+          ) : (<li><a href={n.href}>{n.label}</a></li>))}
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main><div class="wrap"><slot /></div></main>
+  <footer>
+    <div class="wrap">
+      運営団体 Hive Japan運営委員会／<a href={`mailto:${site.email}`}>{site.email}</a>／<a href={site.instagram}>Instagram</a><br />
+      Copyright © Hive Japan {new Date().getFullYear()} All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>

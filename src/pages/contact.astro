@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+---
+<Base title="お問い合わせ">
+  <h1>お問い合わせ</h1>
+  <p>Hive Japanへのお問い合わせは、下記のメールアドレスまでご連絡ください。</p>
+  <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+  {site.contactFormUrl && <p><a href={site.contactFormUrl}>お問い合わせフォームはこちら</a></p>}
+</Base>

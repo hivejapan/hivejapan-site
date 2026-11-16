@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<Base title={page.data.title}>
+  <h1>{page.data.title}</h1>
+  <article class="prose"><Content /></article>
+</Base>
+<style>
+  .prose :global(p) { margin:0 0 1.1em; }
+  .prose :global(p:has(img)) { display:inline-block; width:calc(50% - 6px); margin:0 4px 8px 0; vertical-align:top; }
+  @media (max-width:600px) { .prose :global(p:has(img)) { width:100%; } }
+</style>
