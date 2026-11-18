@@ -1,10 +1,8 @@
 ---
-import Honeycomb from './Honeycomb.astro';
 interface Props { kicker: string; title: string }
 const { kicker, title } = Astro.props;
 ---
 <header class="phead">
-  <Honeycomb size={64} intensity={0.9} interval={1800} />
   <div class="wrap inner">
     <p class="kicker">{kicker}</p>
     <h1>{title}</h1>
