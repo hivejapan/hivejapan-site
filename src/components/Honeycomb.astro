@@ -1,0 +1,176 @@
+---
+/**
+ * 動くハニカム背景。親要素いっぱいに広がる（親に position:relative が必要）。
+ * - 一定間隔で「波紋」がセルからセルへ伝わる
+ * - マウス／指の位置のセルが光る
+ * - 画面外や非表示タブでは停止、「視差効果を減らす」設定では静止画
+ */
+interface Props {
+  size?: number; // 六角形の半径(px)
+  intensity?: number; // 0〜1 光の強さ
+  interval?: number; // 波紋の間隔(ms)
+  interactive?: boolean;
+  class?: string;
+}
+const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cls = '' } = Astro.props;
+---
+<hive-comb
+  class={`hive-comb ${cls}`}
+  data-size={size}
+  data-intensity={intensity}
+  data-interval={interval}
+  data-interactive={interactive ? '1' : '0'}
+  aria-hidden="true"
+><canvas></canvas></hive-comb>
+
+<style>
+  /* 文字が載る左側は網目を消し、右側に向かって現れる */
+  .hive-comb { position:absolute; inset:0; display:block; pointer-events:none; overflow:hidden;
+    -webkit-mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%);
+    mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%); }
+  .hive-comb.full { -webkit-mask-image:none; mask-image:none; }
+  .hive-comb canvas { width:100%; height:100%; display:block; }
+</style>
+
+<script>
+  const SQ3 = Math.sqrt(3);
+  type Wave = { q: number; r: number; t0: number; amp: number; reach: number; speed: number };
+
+  class HiveComb extends HTMLElement {
+    canvas!: HTMLCanvasElement;
+    ctx!: CanvasRenderingContext2D;
+    R = 34; k = 1; interval = 1600; interactive = true;
+    w = 0; h = 0; dpr = 1; cols = 0; rows = 0;
+    waves: Wave[] = [];
+    raf = 0; visible = false; lastSpawn = 0; lastCell = '';
+    ro?: ResizeObserver; io?: IntersectionObserver;
+    reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    onMove = (e: PointerEvent) => this.pointer(e);
+    onVis = () => this.toggle();
+
+    connectedCallback() {
+      this.canvas = this.querySelector('canvas')!;
+      this.ctx = this.canvas.getContext('2d')!;
+      this.R = Number(this.dataset.size) || 34;
+      this.k = Number(this.dataset.intensity) || 1;
+      this.interval = Number(this.dataset.interval) || 1600;
+      this.interactive = this.dataset.interactive === '1';
+      this.ro = new ResizeObserver(() => this.resize());
+      this.ro.observe(this);
+      this.io = new IntersectionObserver(([en]) => { this.visible = en.isIntersecting; this.toggle(); });
+      this.io.observe(this);
+      document.addEventListener('visibilitychange', this.onVis);
+      if (this.interactive) window.addEventListener('pointermove', this.onMove, { passive: true });
+      this.resize();
+    }
+    disconnectedCallback() {
+      cancelAnimationFrame(this.raf); this.raf = 0;
+      this.ro?.disconnect(); this.io?.disconnect();
+      document.removeEventListener('visibilitychange', this.onVis);
+      window.removeEventListener('pointermove', this.onMove);
+    }
+    resize() {
+      const r = this.getBoundingClientRect();
+      this.dpr = Math.min(devicePixelRatio || 1, 2);
+      this.w = r.width; this.h = r.height;
+      this.canvas.width = Math.round(this.w * this.dpr);
+      this.canvas.height = Math.round(this.h * this.dpr);
+      // 狭い画面では少し小さく
+      const R = this.w < 600 ? this.R * 0.75 : this.R;
+      this.cols = Math.ceil(this.w / (SQ3 * R)) + 2;
+      this.rows = Math.ceil(this.h / (1.5 * R)) + 2;
+      (this as any)._R = R;
+      if (this.reduce || !this.raf) this.draw(performance.now());
+    }
+    toggle() {
+      const run = this.visible && !document.hidden && !this.reduce;
+      if (run && !this.raf) {
+        const loop = (t: number) => { this.draw(t); this.raf = requestAnimationFrame(loop); };
+        this.raf = requestAnimationFrame(loop);
+      } else if (!run && this.raf) { cancelAnimationFrame(this.raf); this.raf = 0; }
+    }
+    center(col: number, row: number) {
+      const R = (this as any)._R as number;
+      return [col * SQ3 * R + (row & 1 ? (SQ3 * R) / 2 : 0) - SQ3 * R / 2, row * 1.5 * R - R / 2];
+    }
+    axial(col: number, row: number) { return [col - (row - (row & 1)) / 2, row]; }
+    dist(q1: number, r1: number, q2: number, r2: number) {
+      const dq = q1 - q2, dr = r1 - r2;
+      return (Math.abs(dq) + Math.abs(dr) + Math.abs(dq + dr)) / 2;
+    }
+    pointer(e: PointerEvent) {
+      const b = this.getBoundingClientRect();
+      const x = e.clientX - b.left, y = e.clientY - b.top;
+      if (x < 0 || y < 0 || x > b.width || y > b.height) return;
+      const R = (this as any)._R as number;
+      const row = Math.round((y + R / 2) / (1.5 * R));
+      const col = Math.round((x + SQ3 * R / 2 - (row & 1 ? (SQ3 * R) / 2 : 0)) / (SQ3 * R));
+      const key = col + ',' + row;
+      if (key === this.lastCell) return;
+      this.lastCell = key;
+      const [q, r] = this.axial(col, row);
+      this.waves.push({ q, r, t0: performance.now(), amp: 0.8, reach: 1, speed: 80 });
+    }
+    spawn(t: number) {
+      const col = Math.floor(Math.random() * this.cols), row = Math.floor(Math.random() * this.rows);
+      const [q, r] = this.axial(col, row);
+      this.waves.push({ q, r, t0: t, amp: 0.6 + Math.random() * 0.4, reach: 1 + Math.floor(Math.random() * 2), speed: 140 });
+    }
+    draw(t: number) {
+      const { ctx, dpr } = this;
+      const R = (this as any)._R as number;
+      if (!R) return;
+      if (!this.reduce && t - this.lastSpawn > this.interval) { this.spawn(t); this.lastSpawn = t; }
+      if (this.reduce && this.waves.length === 0) for (let i = 0; i < 6; i++) this.spawn(t - 300);
+      const LIFE = 1100;
+      this.waves = this.waves.filter((w) => t - w.t0 < w.reach * w.speed + LIFE);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, this.w, this.h);
+      // セル同士の隙間を広めに取り、穴が密集して見えないようにする
+      const inset = R * 0.84;
+      for (let row = 0; row < this.rows; row++) {
+        for (let col = 0; col < this.cols; col++) {
+          const [cx, cy] = this.center(col, row);
+          const [q, r] = this.axial(col, row);
+          // ゆっくり呼吸するベースの明るさ
+          let e = 0;
+          for (const w of this.waves) {
+            const d = this.dist(q, r, w.q, w.r);
+            if (d > w.reach) continue;
+            const dt = t - (w.t0 + d * w.speed);
+            if (dt < 0 || dt > LIFE) continue;
+            e += w.amp * (1 - d / (w.reach + 1)) * Math.sin((Math.PI * dt) / LIFE);
+          }
+          e = Math.min(1, e) * this.k;
+          // 網目は一面に出さず、ゆっくり漂う「まだら」の範囲だけにうっすら出す
+          const field = Math.sin(cx * 0.0042 + t * 0.00012) * Math.cos(cy * 0.0055 - t * 0.0001)
+            + 0.6 * Math.sin((cx + cy) * 0.0021 - t * 0.00008);
+          const patch = Math.max(0, Math.min(1, (field - 0.35) / 0.8));
+          if (e <= 0.02 && patch <= 0.01) continue;
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const a = (Math.PI / 3) * i - Math.PI / 6;
+            const px = cx + inset * Math.cos(a), py = cy + inset * Math.sin(a);
+            i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+          }
+          ctx.closePath();
+          if (e > 0.02) {
+            // 中心ほど明るい蜂蜜色のグロー
+            const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, inset);
+            g.addColorStop(0, `rgba(243,200,110,${(e * 0.22).toFixed(3)})`);
+            g.addColorStop(1, `rgba(233,180,76,${(e * 0.04).toFixed(3)})`);
+            ctx.fillStyle = g;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(243,212,142,${(0.1 + e * 0.75).toFixed(3)})`;
+            ctx.lineWidth = 1 + e * 0.8;
+          } else {
+            ctx.strokeStyle = `rgba(160,185,235,${(patch * 0.13 * this.k).toFixed(3)})`;
+            ctx.lineWidth = 1;
+          }
+          ctx.stroke();
+        }
+      }
+    }
+  }
+  if (!customElements.get('hive-comb')) customElements.define('hive-comb', HiveComb);
+</script>

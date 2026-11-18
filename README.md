@@ -6,7 +6,9 @@ Hive Japan 公式サイト（https://hivejapan.org/ の移行先、仮設版）�
 - `src/pages/index.astro` … トップ（Mission・アドバイザー・運営メンバー）
 - `src/data/people.json` … アドバイザー・運営メンバーの文章（ここを直せばトップに反映）
 - `src/data/site.json` … メニュー、連絡先、Instagram
-- `src/content/pages/*.md` … Summit各回・地方サミット・レポートの本文（Markdown）。ファイルを足すと `/<ファイル名>/` のページが増えます
+- `src/content/pages/*.md` … Summit各回・地方サミット・レポート。ファイルを足すと `/<ファイル名>/` のページが増えます
+  - 開催ページは先頭の `---` の間に項目で書きます（`about`＝概要とテーマ、`guests`＝ゲストと写真、`schedule`/`venue`＝日程・会場と会場写真、`press`＝メディア掲載、`photos`＝当日の写真）。項目の一覧と意味は `src/content.config.ts`
+  - レポートは本文を Markdown で書きます（写真は `<figure><img src="..."></figure>`）
 - `public/images/` … 写真（旧Squarespaceから取得したもの。長辺1600pxに縮小済み）
 - `public/media/top.mp4` … トップの背景動画
 - `wrangler.jsonc` … Cloudflare の設定

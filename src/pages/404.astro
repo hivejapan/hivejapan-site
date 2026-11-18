@@ -1,4 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
 ---
-<Base title="ページが見つかりません"><h1>ページが見つかりません</h1><p><a href="/">トップへ戻る</a></p></Base>
+<Base title="ページが見つかりません" hero>
+  <PageHead kicker="404" title="ページが見つかりません" />
+  <div class="wrap" style="padding:72px 24px 120px"><p><a href="/">トップへ戻る →</a></p></div>
+</Base>
