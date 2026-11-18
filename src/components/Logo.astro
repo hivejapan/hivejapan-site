@@ -1,0 +1,27 @@
+---
+// 仮ロゴ（ハニカムのマーク＋ワードマーク）。正式ロゴの SVG が手に入ったら差し替え
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<span class={`logo ${cls}`}>
+  <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+      <polygon class="c c1" points="14,3 21,7 21,15 14,19 7,15 7,7" />
+      <polygon class="c c2" points="28,11 35,15 35,23 28,27 21,23 21,15" />
+      <polygon class="c c3" points="14,19 21,23 21,31 14,35 7,31 7,23" />
+    </g>
+    <polygon class="fillc" points="28,11 35,15 35,23 28,27 21,23 21,15" />
+  </svg>
+  <span class="word">HIVE<b>JAPAN</b></span>
+</span>
+<style>
+  .logo { display:inline-flex; align-items:center; gap:10px; line-height:1; }
+  .mark { width:30px; height:30px; color:var(--honey); overflow:visible; }
+  .fillc { fill:var(--honey); opacity:.9; transform-origin:28px 19px; transition:transform .5s cubic-bezier(.3,1.6,.5,1); }
+  .c { transform-box:fill-box; transform-origin:center; transition:transform .5s cubic-bezier(.3,1.6,.5,1); }
+  .word { font-family:var(--font-en); font-weight:800; letter-spacing:.14em; font-size:1.02rem; }
+  .word b { font-weight:400; margin-left:.35em; opacity:.8; }
+  :global(a:hover) > .logo .c1 { transform:translate(-1px,-1px) rotate(30deg); }
+  :global(a:hover) > .logo .c3 { transform:translate(-1px,1px) rotate(-30deg); transition-delay:.06s; }
+  :global(a:hover) > .logo .fillc { transform:scale(.7) rotate(60deg); }
+</style>

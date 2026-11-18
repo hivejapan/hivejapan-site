@@ -1,0 +1,17 @@
+---
+import Honeycomb from './Honeycomb.astro';
+interface Props { kicker: string; title: string }
+const { kicker, title } = Astro.props;
+---
+<header class="phead">
+  <Honeycomb size={64} intensity={0.9} interval={1800} />
+  <div class="wrap inner">
+    <p class="kicker">{kicker}</p>
+    <h1>{title}</h1>
+  </div>
+</header>
+<style>
+  .phead { position:relative; background:linear-gradient(180deg,var(--navy-950),var(--navy-900)); color:#fff; overflow:hidden; }
+  .inner { position:relative; padding-top:160px; padding-bottom:72px; }
+  h1 { margin:0; font-family:var(--font-mincho); font-weight:800; font-size:clamp(2rem,5vw,3.4rem); letter-spacing:.08em; }
+</style>

@@ -1,28 +1,23 @@
 ---
 title: "HIVE JAPAN Summit 2026 Well-being イベントレポート"
-gallery:
-  - "/images/49a8e940.jpg"
-  - "/images/4b855e2a.jpg"
-  - "/images/edabd011.jpg"
-  - "/images/ca89bb82.jpg"
-  - "/images/b33b14ba.jpg"
-  - "/images/9aaf06c6.jpg"
-  - "/images/5fd484d2.jpg"
-  - "/images/b9f58602.jpg"
-  - "/images/968a95be.jpg"
-  - "/images/5176c621.jpg"
-  - "/images/1e2dd8ce.jpg"
+kind: "report"
+order: 2026
+label: "Summit 2026 Well-being レポート"
+tagline: "志ある若者たちは、なぜこの場で深くつながり、ウェルビーイングを高めていけるのか？"
+date: "2026.8.16"
+place: "井上寛人"
+thumb: "/images/4b855e2a.jpg"
+author:
+  name: "井上寛人"
+  photo: "/images/1e2dd8ce.jpg"
+  bio: "ソーシャル・アントレプレナーのウェルビーイングを探究する研究者／実務家。明治大学在学中に若者による環境運動「Fridays For Future Tokyo」の立ち上げに関わり、自身や仲間の燃え尽き症候群を目の当たりにしたことをきっかけに、挑戦する人の心が壊れずにすむ社会のあり方を探究してきた。慶應義塾大学大学院システムデザイン・マネジメント研究科修了。現在は武蔵野大学大学院ウェルビーイング研究科に在籍し、社会起業家をはじめとするソーシャルセクターのリーダーが抱える構造的ストレスの特定と緩和をテーマに研究している。"
+  links:
+    - label: "Instagram: @hiro_to_be"
+      url: "https://www.instagram.com/hiro_to_be/"
+backTo:
+  href: "/summit-2026/"
+  label: "HIVE JAPAN Summit 2026 開催記録に戻る"
 ---
-
-## HIVE JAPAN Summit 2026 Well-being イベントレポート
-
-Aug 16
-
-Written by HIVE JAPAN 運営事務局
-
-著者: 井上寛人
-
-## 志ある若者たちは、なぜこの場で深くつながり、ウェルビーイングを高めていけるのか？
 
 2026年2月7日・8日の2日間にわたり、「HIVE JAPAN Summit 2026」が開催された。会場となったのは、千葉県長生郡長柄町にある「Sport & Do Resort リソルの森」である。体育館や食堂などを備えた複合施設を舞台に、大企業に勤める会社員、起業家、研究者、公務員、医師、学生など、多様なバックグラウンドを持つ20代の志ある若者約80名が集まった。
 
@@ -32,17 +27,17 @@ Written by HIVE JAPAN 運営事務局
 
 私は現在、武蔵野大学大学院ウェルビーイング研究科にて、社会起業家をはじめとするチェンジ・リーダーのメンタルヘルスとウェルビーイングについて研究している。そこで本レポートでは、それらの知見も踏まえながら、ウェルビーイング研究等の観点から本イベントを考察していく。
 
-（著者: 写真右下）
+<figure><img src="/images/968a95be.jpg" alt="" loading="lazy" /><figcaption>著者: 写真右下</figcaption></figure>
 
 今回、私自身の参加経験、参加者へのインタビュー、そして関連する先行研究のレビューを通して、Hive Japanには参加者のウェルビーイングを高める3つの要素があると考えた。
 
-多様な仲間や友人と出会うきっかけになること。
-
-心理的安全性の高い環境で、多様なメンバーとの対話を通じて、自らの志が磨かれ、自己理解が深まること。
-
-日本社会、さらには地球規模の課題を見渡す高い視座と、領域横断的な広い視野を獲得・強化できること。
+1. 多様な仲間や友人と出会うきっかけになること。
+2. 心理的安全性の高い環境で、多様なメンバーとの対話を通じて、自らの志が磨かれ、自己理解が深まること。
+3. 日本社会、さらには地球規模の課題を見渡す高い視座と、領域横断的な広い視野を獲得・強化できること。
 
 以下、「志ワークショップ」を起点としながら、この3点について詳しく述べていきたい。
+
+<figure><img src="/images/49a8e940.jpg" alt="" loading="lazy" /></figure>
 
 ## 1. 出会いが、志の「居場所」をつくる
 
@@ -61,6 +56,8 @@ Written by HIVE JAPAN 運営事務局
 さらに、このような多様なつながりの価値は、情報収集の面だけにとどまらない。Collins et al.（2022）は、家族、友人、同僚、知人など、多様な関係性の人々と関わっていること自体がウェルビーイングと関連することを示している。しかもその効果は、単に人と関わる量が多いことではなく、「どれほど多様な関係性を持っているか」による点が重要である（Collins et al., 2022）。また、友人の数が多いこと以上に、友人の多様性のほうが幸福度に強く寄与し、多様な知り合いを持つ人ほどレジリエンスが高いことも示唆されている（前野, 2020）。
 
 こうして見ると、Hive Japanにおける多様な出会いは、参加者同士での新しい知見の交換を促進している。さらに、セーフティーネットのような支え合いの可能性を広げる。それがしなやかに立ち直る力や幸福感を支える基盤にもなっていると考えられる。
+
+<figure><img src="/images/edabd011.jpg" alt="" loading="lazy" /></figure>
 
 ## 2. 安心して語れるから、自分の輪郭が見えてくる
 
@@ -86,6 +83,10 @@ Hive Japanの価値は、多様な仲間と出会えることだけにとどま�
 
 このように考えると、Hive Japanにおける心理的安全性の高い対話は、参加者が自らの志や価値観を見つめ直し、「自分は何を大切にしたいのか」「どこに向かいたいのか」をより深く理解するプロセスを支えていたと考えられる。多様な出会いが関係性の広がりをもたらすとすれば、心理的安全性の高い対話は、その関係性を通じて自己理解と志の解像度を高める働きを持つ。Hive Japanは、単に多様な人と出会う場であるだけでなく、多様な他者との対話を通して、自分自身の輪郭をより深く見出していく場でもあったのではないだろうか。
 
+<figure><img src="/images/b33b14ba.jpg" alt="" loading="lazy" /></figure>
+
+<figure><img src="/images/9aaf06c6.jpg" alt="" loading="lazy" /></figure>
+
 ## 3. 社会と世界を見渡す視座が、志に意味を与える
 
 さらに、Hive Japanで得られる価値は、個人的なつながりや自己理解の深まりだけではない。日本社会、さらには地球規模の課題を視野に入れながら、自分の関心や実践を位置づけ直せることも、大きな意義のひとつである。伊藤・小玉（2005）が扱う「人生における目的」は、心理的ウェルビーイングの重要な構成要素であり、自分の関心や挑戦を社会課題や公共性、さらには地球規模の課題と結びつけて捉えることは、自らの営みに意味と方向性を与えることにつながる。
@@ -110,6 +111,8 @@ Hive Japanの価値は、多様な仲間と出会えることだけにとどま�
 
 そして、その思想を場として体現しようとしているのが、堀さんをはじめとする運営メンバーの存在である。参加者一人ひとりに目を配りながら、情熱とケアの両方をもって場を支えていたことが、今回の豊かな体験を下支えしていたのだと思う。
 
+<figure><img src="/images/b9f58602.jpg" alt="" loading="lazy" /></figure>
+
 ## おわりに
 
 ここまで見てきたように、Hive Japanには、参加者のウェルビーイングを高める複数の要素が重なり合って存在している。多様な仲間との出会いは、情報や助け合いへのアクセスを広げ、しなやかに立ち直る力を支える。心理的安全性の高い対話は、他者理解を深めるだけでなく、自らの志や価値観を見つめ直す契機となる。そして、社会や地球規模の課題を視野に入れる経験は、自分の実践に意味と方向性を与え、より大きな文脈の中で自己を位置づけ直すことを可能にする。
@@ -118,34 +121,20 @@ Hive Japanの価値は、多様な仲間と出会えることだけにとどま�
 
 Hive Japanは、単なる交流イベントでも自己啓発の場でもない。自己理解、多様な仲間とのつながり、そして自身の生き方の社会的意味づけが重なり合うことで、参加者一人ひとりのウェルビーイングに深く働きかける場である。今回の記事制作を通して、私はそのことを強く実感した。だからこそHive Japanは、志ある若者たちにとって、自分らしい挑戦を促進するための機会であると同時に、仲間と支え合いながら、これからのポジティブな未来を作っていける唯一無二のコミュニティなのだ。
 
-著者：井上寛人
+<figure><img src="/images/5176c621.jpg" alt="" loading="lazy" /></figure>
 
-ソーシャル・アントレプレナーのウェルビーイングを探究する研究者／実務家。明治大学在学中に若者による環境運動「Fridays For Future Tokyo」の立ち上げに関わり、自身や仲間の燃え尽き症候群を目の当たりにしたことをきっかけに、挑戦する人の心が壊れずにすむ社会のあり方を探究してきた。慶應義塾大学大学院システムデザイン・マネジメント研究科修了。現在は武蔵野大学大学院ウェルビーイング研究科に在籍し、社会起業家をはじめとするソーシャルセクターのリーダーが抱える構造的ストレスの特定と緩和をテーマに研究している。
+## 参考文献
 
-Instagram: @hiro_to_be
+<div class="refs">
 
-LinkedIn: Hiroto Inoue
+- Collins, W. D., et al. (2022). Relational diversity in social portfolios predicts well-being. Proceedings of the National Academy of Sciences, 119(43), e2206782119.
+- Edmondson, A. C. (1999). Psychological safety and learning behavior in work teams. Administrative Science Quarterly, 44(2), 350-383.
+- Granovetter, M. S. (1973). The strength of weak ties. American Journal of Sociology, 78(6), 1360-1380.
+- Henrik, T. (2022). Psychological Safety in Diverse Teams. Manuscript.
+- 伊藤正哉・小玉正博（2005）「自分らしくある感覚（本来感）と自尊感情がwell-beingに及ぼす影響の検討」『教育心理学研究』53(1), 74-85.
+- 川人潤子・堀匡・大塚泰正（2010）「大学生の抑うつ予防のための自己複雑性介入プログラムの効果」『パーソナリティ研究』19(2), 139-151.
+- 前野隆司（2020）「『心から幸せになるためのメカニズム』を学ぶ（4）つながりと感謝の『ありがとう因子』」講義録.
+- 前野隆司・今井道子・保井俊之（2023）「成功する日本の社会起業家の資質とふるまいの構造化」『日本システムデザイン学会誌』4(1), 1-12.
+- Seligman, M. E. P. (2011). Flourish: A Visionary New Understanding of Happiness and Well-Being. New York, NY: Free Press.
 
-参考文献
-
-Collins, W. D., et al. (2022). Relational diversity in social portfolios predicts well-being. Proceedings of the National Academy of Sciences, 119(43), e2206782119.
-
-Edmondson, A. C. (1999). Psychological safety and learning behavior in work teams. Administrative Science Quarterly, 44(2), 350-383.
-
-Granovetter, M. S. (1973). The strength of weak ties. American Journal of Sociology, 78(6), 1360-1380.
-
-Henrik, T. (2022). Psychological Safety in Diverse Teams. Manuscript.
-
-伊藤正哉・小玉正博（2005）「自分らしくある感覚（本来感）と自尊感情がwell-beingに及ぼす影響の検討」『教育心理学研究』53(1), 74-85.
-
-川人潤子・堀匡・大塚泰正（2010）「大学生の抑うつ予防のための自己複雑性介入プログラムの効果」『パーソナリティ研究』19(2), 139-151.
-
-前野隆司（2020）「『心から幸せになるためのメカニズム』を学ぶ（4）つながりと感謝の『ありがとう因子』」講義録.
-
-前野隆司・今井道子・保井俊之（2023）「成功する日本の社会起業家の資質とふるまいの構造化」『日本システムデザイン学会誌』4(1), 1-12.
-
-Seligman, M. E. P. (2011). Flourish: A Visionary New Understanding of Happiness and Well-Being. New York, NY: Free Press.
-
-← HIVE JAPAN Summit 2026 開催記録に戻る
-
-HIVE JAPAN 運営事務局
+</div>

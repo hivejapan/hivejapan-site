@@ -1,70 +1,200 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import site from '../data/site.json';
-const { title, description = '「日本の未来を切り拓く」— 志ある若者が領域を超えて集うコミュニティ Hive Japan' } = Astro.props;
+import Logo from '../components/Logo.astro';
+import Honeycomb from '../components/Honeycomb.astro';
+import { hexReveal } from '../lib/transitions';
+interface Props { title?: string; description?: string; hero?: boolean }
+const { title, description = '「日本の未来を切り拓く」— 志ある若者が領域を超えて集うコミュニティ Hive Japan', hero = false } = Astro.props;
 const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
 ---
 <!doctype html>
-<html lang="ja">
+<html lang="ja" transition:animate={hexReveal}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
+  <meta name="theme-color" content="#0a1a3a" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <ClientRouter />
   <style is:global>
-    :root { --ink:#1b1b1f; --muted:#5d5d66; --line:#e6e4df; --bg:#faf9f6; --accent:#c8851a; --card:#ffffff; }
-    @media (prefers-color-scheme: dark) { :root { --ink:#eeece8; --muted:#a8a6a0; --line:#2e2d2a; --bg:#161614; --card:#1f1e1c; } }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family: "Hiragino Sans","Noto Sans JP",system-ui,sans-serif; line-height:1.85; }
-    a { color:inherit; }
-    .wrap { max-width:960px; margin:0 auto; padding:0 20px; }
-    header.site { border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:10; }
-    header.site .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:60px; flex-wrap:wrap; }
-    .logo { font-weight:800; letter-spacing:.04em; text-decoration:none; font-size:1.15rem; }
-    nav ul { list-style:none; margin:0; padding:0; display:flex; gap:18px; flex-wrap:wrap; font-size:.92rem; }
-    nav li { position:relative; }
-    nav a { text-decoration:none; color:var(--muted); }
-    nav a:hover { color:var(--ink); }
-    nav details summary { cursor:pointer; color:var(--muted); list-style:none; }
-    nav details[open] ul { position:absolute; top:28px; left:0; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 14px; display:block; min-width:180px; z-index:20; }
-    nav details[open] li { padding:3px 0; }
-    .menu-toggle, .menu-btn { display:none; }
-    @media (max-width:760px) {
-      .menu-btn { display:block; font-size:1.5rem; cursor:pointer; padding:4px 8px; }
-      nav { display:none; width:100%; padding-bottom:12px; }
-      .menu-toggle:checked ~ nav { display:block; }
-      nav ul { flex-direction:column; gap:10px; }
-      nav details[open] ul { position:static; border:none; padding:6px 0 0 14px; background:none; }
+    :root {
+      --navy-950:#050d20; --navy-900:#0a1a3a; --navy-800:#11264f; --navy-700:#1b3768; --navy-500:#3d5a92;
+      --honey:#e9b44c; --honey-soft:#f3d48e;
+      --paper:#f5f6f9; --card:#ffffff; --ink:#0d1b36; --muted:#5a6680; --line:rgba(13,27,54,.12);
+      --on-navy:#e8edf7; --on-navy-muted:#9fb0d0;
+      --font-jp:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+      --font-mincho:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+      --font-en:"Montserrat",var(--font-jp);
+      --hex: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+      --ease: cubic-bezier(.2,.8,.2,1);
+      color-scheme: light;
     }
-    main { padding:40px 0 64px; }
-    main img { max-width:100%; height:auto; border-radius:6px; }
-    h1 { font-size:clamp(1.6rem,4vw,2.4rem); line-height:1.35; margin:0 0 24px; }
-    h2 { font-size:1.3rem; margin:48px 0 12px; padding-top:10px; position:relative; }
-    h2::before { content:""; position:absolute; top:0; left:0; width:80px; border-top:2px solid var(--accent); }
-    footer { border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:.85rem; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    /* body は紺（ページ遷移中に背後に見える色）、本文エリアは main が紙色 */
+    body { margin:0; background:var(--navy-950); color:var(--ink); font-family:var(--font-jp); line-height:1.95; letter-spacing:.02em; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+    img { max-width:100%; height:auto; }
+    .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+    @media (max-width:600px) { .wrap { padding:0 16px; } }
+    .kicker { font-family:var(--font-en); font-size:.74rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--honey); display:inline-flex; align-items:center; gap:10px; margin:0 0 14px; }
+    .kicker::before { content:""; width:10px; height:11.5px; background:currentColor; clip-path:var(--hex); }
+    .sec-title { font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.7rem,3.6vw,2.6rem); line-height:1.4; margin:0 0 28px; letter-spacing:.04em; }
+
+    /* ---------- header ---------- */
+    header.site { position:fixed; inset:0 0 auto; z-index:50; color:var(--on-navy); transition:background .4s var(--ease), box-shadow .4s var(--ease); background:rgba(10,26,58,.82); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4); box-shadow:0 1px 0 rgba(255,255,255,.06); }
+    html.on-hero:not(.scrolled) header.site { background:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+    header.site .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; height:68px; }
+    .home-link { text-decoration:none; position:relative; z-index:2; }
+    nav.main > ul { list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:4px; font-size:.88rem; }
+    nav.main li { position:relative; }
+    nav.main a, nav.main summary { display:block; padding:8px 14px; text-decoration:none; color:var(--on-navy); opacity:.86; border-radius:999px; cursor:pointer; transition:opacity .2s, background .2s; list-style:none; }
+    nav.main summary::-webkit-details-marker { display:none; }
+    nav.main summary::after { content:""; display:inline-block; width:6px; height:6px; margin-left:8px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-3px) rotate(45deg); transition:transform .25s; }
+    nav.main details[open] summary::after { transform:translateY(0) rotate(-135deg); }
+    nav.main a:hover, nav.main summary:hover, nav.main details[open] summary { opacity:1; background:rgba(255,255,255,.08); }
+    nav.main .sub { list-style:none; margin:0; padding:8px; position:absolute; top:calc(100% + 10px); left:0; min-width:220px; background:var(--navy-900); border:1px solid rgba(255,255,255,.1); border-radius:14px; box-shadow:0 20px 40px -12px rgba(0,0,0,.5); animation:drop .25s var(--ease); }
+    nav.main .sub a { border-radius:8px; padding:9px 14px; }
+    @keyframes drop { from { opacity:0; transform:translateY(-6px); } }
+    .menu-toggle { position:absolute; opacity:0; pointer-events:none; }
+    .menu-btn { display:none; }
+    @media (max-width:860px) {
+      .menu-btn { display:grid; place-items:center; width:44px; height:44px; cursor:pointer; position:relative; z-index:2; }
+      .menu-btn span, .menu-btn span::before { display:block; width:22px; height:2px; background:currentColor; border-radius:2px; transition:transform .35s var(--ease); position:relative; }
+      .menu-btn span { transform:translateY(-4px); }
+      .menu-btn span::before { content:""; position:absolute; top:8px; }
+      .menu-toggle:checked ~ .menu-btn span { transform:translateY(0) rotate(45deg); }
+      .menu-toggle:checked ~ .menu-btn span::before { transform:translateY(-8px) rotate(-90deg); }
+      nav.main { position:fixed; inset:0; background:var(--navy-950); padding:96px 24px 40px; overflow-y:auto; clip-path:circle(0 at calc(100% - 38px) 34px); transition:clip-path .6s var(--ease); visibility:hidden; }
+      .menu-toggle:checked ~ nav.main { clip-path:circle(150% at calc(100% - 38px) 34px); visibility:visible; }
+      html:has(.menu-toggle:checked) { overflow:hidden; }
+      nav.main > ul { flex-direction:column; align-items:stretch; gap:6px; font-size:1.15rem; }
+      nav.main a, nav.main summary { padding:12px 6px; border-radius:0; border-bottom:1px solid rgba(255,255,255,.08); }
+      nav.main .sub { position:static; background:none; border:none; box-shadow:none; padding:4px 0 8px 18px; animation:none; }
+      nav.main .sub a { font-size:1rem; border:none; padding:8px 6px; }
+    }
+
+    /* ---------- main ---------- */
+    main { display:block; min-height:60vh; background:var(--paper); }
+    .page-pad { padding-top:68px; }
+
+    /* ---------- footer ---------- */
+    footer.site { position:relative; background:var(--navy-950); color:var(--on-navy-muted); overflow:hidden; font-size:.86rem; }
+    footer.site .wrap { position:relative; padding-top:72px; padding-bottom:40px; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:40px; }
+    footer.site .brand { color:var(--on-navy); text-decoration:none; }
+    footer.site p { margin:14px 0 0; }
+    footer.site h3 { font-family:var(--font-en); font-size:.72rem; letter-spacing:.24em; color:var(--honey); margin:0 0 12px; font-weight:600; }
+    footer.site ul { list-style:none; margin:0; padding:0; }
+    footer.site li a { text-decoration:none; display:inline-block; padding:3px 0; }
+    footer.site a:hover { color:var(--on-navy); }
+    footer.site .copy { grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.08); padding-top:22px; font-size:.76rem; letter-spacing:.06em; }
+    @media (max-width:760px) { footer.site .wrap { grid-template-columns:1fr; gap:28px; } }
+
+    /* ---------- page transitions ---------- */
+    @keyframes hive-page-out { to { opacity:0; transform:scale(.97); filter:blur(4px); } }
+    @keyframes hive-hex-in {
+      from { clip-path:polygon(50% 46%, 53% 48%, 53% 52%, 50% 54%, 47% 52%, 47% 48%); }
+      to   { clip-path:polygon(50% -60%, 165% -5%, 165% 105%, 50% 160%, -65% 105%, -65% -5%); }
+    }
+    /* サムネイル→カバー写真のモーフィング */
+    ::view-transition-group(*) { animation-duration:.7s; animation-timing-function:cubic-bezier(.7,0,.2,1); }
+    /* 古いページが沈んだあとに見える紺の背景 */
+    html::view-transition { background:var(--navy-950); }
+
+    /* reveal on scroll */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
+    .reveal.in { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .reveal { opacity:1; transform:none; transition:none; }
+    }
   </style>
 </head>
 <body>
-  <header class="site">
+  <header class="site" transition:persist="site-header" transition:name="site-header" transition:animate="none">
     <div class="wrap">
-      <a class="logo" href="/">Hive Japan</a>
-      <input type="checkbox" id="menu" class="menu-toggle" aria-label="メニューを開く" />
-      <label for="menu" class="menu-btn" aria-hidden="true">☰</label>
-      <nav aria-label="メイン">
+      <a class="home-link" href="/" aria-label="Hive Japan トップ"><Logo /></a>
+      <input type="checkbox" id="menu" class="menu-toggle" />
+      <label for="menu" class="menu-btn" aria-label="メニュー"><span></span></label>
+      <nav class="main" aria-label="メイン">
         <ul>
           {site.nav.map((n) => n.children ? (
-            <li><details><summary>{n.label} ▾</summary><ul>{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
+            <li><details><summary>{n.label}</summary><ul class="sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
           ) : (<li><a href={n.href}>{n.label}</a></li>))}
         </ul>
       </nav>
     </div>
   </header>
-  <main><div class="wrap"><slot /></div></main>
-  <footer>
+
+  <main class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
+    <slot />
+  </main>
+
+  <footer class="site">
+    <Honeycomb size={56} intensity={0.6} interval={3000} />
     <div class="wrap">
-      運営団体 Hive Japan運営委員会／<a href={`mailto:${site.email}`}>{site.email}</a>／<a href={site.instagram}>Instagram</a><br />
-      Copyright © Hive Japan {new Date().getFullYear()} All rights reserved.
+      <div>
+        <a class="brand" href="/"><Logo /></a>
+        <p>日本の未来を切り拓く ── 志ある若者が、領域を超えて集うコミュニティ。</p>
+      </div>
+      <div>
+        <h3>PROGRAMS</h3>
+        <ul>{site.nav.flatMap((n) => n.children ?? []).map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <h3>CONTACT</h3>
+        <ul>
+          <li>運営団体 Hive Japan運営委員会</li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={site.instagram}>Instagram</a></li>
+          <li><a href="/contact/">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <p class="copy">© Hive Japan {new Date().getFullYear()} All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    // ヘッダー状態・メニュー・スクロール表示（ページ遷移のたびに実行）
+    let io: IntersectionObserver | undefined;
+    function setup() {
+      const root = document.documentElement;
+      const onHero = !!document.querySelector('main[data-hero]');
+      root.classList.toggle('on-hero', onHero);
+      const toggle = document.getElementById('menu') as HTMLInputElement | null;
+      if (toggle) toggle.checked = false;
+      document.querySelectorAll('nav.main details').forEach((d) => d.removeAttribute('open'));
+      const onScroll = () => root.classList.toggle('scrolled', scrollY > 40);
+      onScroll();
+      window.removeEventListener('scroll', (window as any).__hiveScroll);
+      (window as any).__hiveScroll = onScroll;
+      window.addEventListener('scroll', onScroll, { passive: true });
+      io?.disconnect();
+      io = new IntersectionObserver((ents) => ents.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io!.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach((el) => io!.observe(el));
+    }
+    document.addEventListener('astro:page-load', setup);
+    // サムネイル→カバー写真のモーフィング：クリックしたカードの写真だけに名前を付ける
+    document.addEventListener('astro:before-preparation', (e: any) => {
+      const img = e.sourceElement?.closest?.('a.pcard')?.querySelector('img[data-vt]') as HTMLElement | null;
+      if (img) img.style.viewTransitionName = img.dataset.vt!;
+    });
+    // 戻るとき：遷移先ページで、元のページのカードに名前を付けてカバー写真をカードへ戻す
+    document.addEventListener('astro:before-swap', (e: any) => {
+      if (e.direction !== 'back') return;
+      const img = e.newDocument.querySelector(`a.pcard[href="${e.from.pathname}"] img[data-vt]`) as HTMLElement | null;
+      if (img) img.style.viewTransitionName = img.dataset.vt!;
+    });
+    // ドロップダウン: 1つだけ開く／外側クリックで閉じる
+    document.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      document.querySelectorAll('nav.main details[open]').forEach((d) => { if (!d.contains(t)) d.removeAttribute('open'); });
+    });
+  </script>
 </body>
 </html>

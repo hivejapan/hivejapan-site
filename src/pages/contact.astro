@@ -1,10 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
 import site from '../data/site.json';
 ---
-<Base title="お問い合わせ">
-  <h1>お問い合わせ</h1>
-  <p>Hive Japanへのお問い合わせは、下記のメールアドレスまでご連絡ください。</p>
-  <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
-  {site.contactFormUrl && <p><a href={site.contactFormUrl}>お問い合わせフォームはこちら</a></p>}
+<Base title="お問い合わせ" hero>
+  <PageHead kicker="Contact" title="お問い合わせ" />
+  <div class="wrap box">
+    <p>Hive Japanへのお問い合わせは、下記のメールアドレスまでご連絡ください。</p>
+    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+    {site.contactFormUrl && <p><a class="form" href={site.contactFormUrl}>お問い合わせフォームはこちら →</a></p>}
+    <p class="ig">最新情報は <a href={site.instagram}>Instagram</a> でも発信しています。</p>
+  </div>
 </Base>
+<style>
+  .box { padding-top:80px; padding-bottom:120px; max-width:760px; }
+  .mail { display:inline-block; margin:12px 0 28px; font-family:var(--font-en); font-weight:600; font-size:clamp(1.1rem,3.4vw,1.7rem); color:var(--navy-900); text-decoration:none; border-bottom:2px solid var(--honey); padding-bottom:4px; word-break:break-all; }
+  .mail:hover { color:var(--navy-700); }
+  .form { font-weight:700; color:var(--navy-700); }
+  .ig { color:var(--muted); font-size:.9rem; }
+</style>

@@ -1,61 +1,209 @@
 ---
 import Base from '../layouts/Base.astro';
+import Honeycomb from '../components/Honeycomb.astro';
+import ProgramCard from '../components/ProgramCard.astro';
 import people from '../data/people.json';
 import imgs from '../home-images.json';
+import { getPrograms } from '../lib/programs';
+const programs = await getPrograms();
+const summits = programs.filter((p) => p.kind === 'summit');
+const regionals = programs.filter((p) => p.kind === 'regional');
+const reports = programs.filter((p) => p.kind === 'report');
+const latest = summits[0];
+// ハニカム状の写真モザイク（2段）
+const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
 ---
-<Base>
-  <section class="hero">
+<Base hero>
+  <!-- ===== Hero ===== -->
+  <section class="hero" style={`background-image:url(${imgs[0]})`}>
     <video class="bg" autoplay muted loop playsinline poster={imgs[0]}><source src="/media/top.mp4" type="video/mp4" /></video>
-    <div class="hero-text">
+    <div class="tint"></div>
+    <Honeycomb size={72} intensity={1} interval={1500} />
+    <div class="wrap hero-inner">
       <p class="eyebrow">誰も知らない「問い」に挑むあなたへ</p>
-      <h1>Hive Japan</h1>
-      <a class="btn" href="/summit-2026/">過去の開催情報はこちら</a>
+      <h1 class="wordmark"><span>HIVE</span><span>JAPAN</span></h1>
+      <p class="sub">日本の未来を切り拓く</p>
+      <div class="cta">
+        {latest && <a class="btn primary" href={latest.href}>{latest.label} を見る</a>}
+        <a class="btn ghost" href="#programs">これまでの開催</a>
+      </div>
+    </div>
+    <a class="scroll" href="#mission" aria-label="下へスクロール"><span></span></a>
+  </section>
+
+  <!-- ===== Mission ===== -->
+  <section id="mission" class="mission">
+    <div class="wrap grid">
+      <div class="head reveal">
+        <p class="kicker">Mission</p>
+        <h2 class="mtitle">日本の<br />未来を<br />切り拓く</h2>
+        <p class="name-note"><b>Hive</b> ＝ 蜂の巣。<br />志を同じくする若者が、蜂の巣のように出入りしながら、ここで得た知見と仲間を各自の挑戦に活かしていく。</p>
+      </div>
+      <div class="text reveal">
+        <p class="lead">Hive Japanは、「日本を良くしたい」と本気で考えている若者が立場を超えて志で繋がり、領域を超えた変革を共に起こせるような場を生み出すために、立ち上がりました。</p>
+        <p>志は共通しているが多様な領域で活躍する若者が、蜂の巣のように出入りをしながらも、この場で得た知見やネットワークをもとに各自の挑戦に活かして欲しいという意味合いを込めて、「Hive（蜂の巣）Japan」と名付けました。</p>
+        <p>課題先進国と呼ばれるようになり、少しずつ沈んでいく「日本」に山積する社会課題を一つずつ解決して、日本に明るい未来をもたらすためには、日本を良くしたいと考える有志が領域を超えて変革を起こす必要があります。</p>
+        <p>Hive Japanに集まっているのは、まだ志半ばの若者であり、まだ社会に対して大きなインパクトを与える力はないかもしれません。しかし、それでも少しずつ我々の力で危機を乗り越え、新しい領域を開拓して、未来を切り拓いていきます。</p>
+        <blockquote>いつの時代も、歴史を動かしてきたのは<br />志高き少数のリーダーたちでした。</blockquote>
+        <p>幕末では、薩摩と長州を中心とした若きリーダーにより、国、そして世界をも動かしました。そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
+        <p class="closing">「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
+      </div>
     </div>
   </section>
 
-  <h2>Mission</h2>
-  <h3 class="lead">日本の未来を切り拓く</h3>
-  <p>Hive Japanは、「日本を良くしたい」と本気で考えている若者が立場を超えて志で繋がり、領域を超えた変革を共に起こせるような場を生み出すために、立ち上がりました。</p>
-  <p>志は共通しているが多様な領域で活躍する若者が、蜂の巣のように出入りをしながらも、この場で得た知見やネットワークをもとに各自の挑戦に活かして欲しいという意味合いを込めて、「Hive（蜂の巣）Japan」と名付けました。</p>
-  <p>Hive Japanがミッションに掲げているのは「日本の未来を切り拓く」です。</p>
-  <p>課題先進国と呼ばれるようになり、少しずつ沈んでいく「日本」に山積する社会課題を一つずつ解決して、日本に明るい未来をもたらすためには、日本を良くしたいと考える有志が領域を超えて変革を起こす必要があります。</p>
-  <p>Hive Japanに集まっているのは、まだ志半ばの若者であり、まだ社会に対して大きなインパクトを与える力はないかもしれません。しかし、それでも少しずつ我々の力で危機を乗り越え、新しい領域を開拓して、未来を切り拓いていきます。</p>
-  <p>いつの時代も、歴史を動かしてきたのは志高き少数のリーダーたちでした。幕末では、薩摩と長州を中心とした若きリーダーにより、国、そして世界をも動かしました。</p>
-  <p>そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
-  <p>「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
+  <!-- ===== Honeycomb photo mosaic ===== -->
+  <section class="mosaic" aria-label="活動の様子">
+    <div class="wrap">
+      {rows.map((row, i) => (
+        <div class={`hrow r${i}`}>
+          {row.map((src, j) => <div class="hex reveal" style={`transition-delay:${(i * 4 + j) * 70}ms`}><img src={src} alt="" loading="lazy" /></div>)}
+        </div>
+      ))}
+    </div>
+  </section>
 
-  <div class="gallery">{imgs.map((src) => <img src={src} alt="" loading="lazy" />)}</div>
+  <!-- ===== Programs ===== -->
+  <section id="programs" class="programs">
+    <Honeycomb size={64} intensity={0.6} interval={2400} />
+    <div class="wrap">
+      <p class="kicker">Programs</p>
+      <h2 class="sec-title">これまでの開催</h2>
 
-  <h2>Advisors</h2>
-  <div class="cards advisors">
-    {people.advisors.map((p) => (<article class="card advisor">{p.photo && <img class="face" src={p.photo} alt={p.name} loading="lazy" />}<div><h4>{p.name}</h4><p class="role">{p.role}</p><p class="bio">{p.bio}</p></div></article>))}
-  </div>
+      <div class="group reveal">
+        <div class="ghead"><h3>HIVE JAPAN Summit</h3><p>年に一度、全国から志ある若者が集う1泊2日の合宿</p></div>
+        <div class="cards summit">{summits.map((p, i) => <ProgramCard p={p} size={i === 0 ? 'lg' : 'md'} />)}</div>
+      </div>
 
-  <h2>運営メンバー</h2>
-  <div class="cards members">
-    {people.members.map((p) => (<article class="card">{p.photo && <img class="face" src={p.photo} alt={p.name} loading="lazy" />}<h4>{p.name}</h4>{p.role && <p class="role">{p.role}</p>}{p.bio && <p class="bio">{p.bio}</p>}{p.tags && <p class="tags">{p.tags}</p>}</article>))}
-  </div>
+      <div class="group reveal">
+        <div class="ghead"><h3>Regional Summits</h3><p>地域の現場に入り、その土地の課題と未来を問う</p></div>
+        <div class="cards">{regionals.map((p) => <ProgramCard p={p} />)}</div>
+      </div>
+
+      <div class="group reveal">
+        <div class="ghead"><h3>Report</h3><p>参加者の声とともに振り返る</p></div>
+        <div class="cards">{reports.map((p) => <ProgramCard p={p} />)}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Advisors ===== -->
+  <section class="people">
+    <div class="wrap">
+      <p class="kicker">Advisors</p>
+      <h2 class="sec-title">アドバイザー</h2>
+      <div class="advisors">
+        {people.advisors.map((p) => (
+          <article class="advisor reveal">
+            {p.photo && <div class="hexframe lg"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
+            <div>
+              <h3>{p.name}</h3>
+              <p class="role">{p.role}</p>
+              <p class="bio">{p.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="kicker" style="margin-top:96px">Members</p>
+      <h2 class="sec-title">運営メンバー</h2>
+      <div class="members">
+        {people.members.map((p) => (
+          <article class="member reveal">
+            {p.photo && <div class="hexframe"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
+            <h3>{p.name}</h3>
+            {p.role && <p class="role">{p.role}</p>}
+            {p.bio && <p class="bio">{p.bio}</p>}
+            {p.tags && <p class="tags">{p.tags.split(/\s+/).filter(Boolean).map((t) => <span>{t}</span>)}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 </Base>
+
 <style>
-  .hero { position:relative; min-height:56vh; display:grid; place-items:center; text-align:center; border-radius:10px; overflow:hidden; margin-bottom:24px; background:#111; }
-  .hero .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.55; }
-  .hero-text { position:relative; color:#fff; padding:40px 16px; }
-  .hero h1 { font-size:clamp(2.4rem,8vw,4.5rem); margin:8px 0 20px; }
-  .eyebrow { margin:0; letter-spacing:.08em; }
-  .btn { display:inline-block; padding:10px 22px; border:1px solid #fff; border-radius:999px; text-decoration:none; }
-  .lead { font-size:1.5rem; margin:4px 0 16px; }
-  .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin:32px 0; }
-  .gallery img { aspect-ratio:3/2; object-fit:cover; width:100%; }
-  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
-  .cards.advisors { grid-template-columns:1fr; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
-  .face { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px; margin-bottom:12px; display:block; }
-  .advisor { display:grid; grid-template-columns:120px 1fr; gap:16px; align-items:start; }
-  .advisor .face { margin:0; }
-  @media (max-width:600px) { .advisor { grid-template-columns:1fr; } .advisor .face { max-width:180px; } }
-  .cards.members { grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
-  .card h4 { margin:0 0 4px; font-size:1.02rem; }
-  .role { margin:0 0 8px; color:var(--muted); font-size:.85rem; }
-  .bio { margin:0 0 8px; font-size:.9rem; }
-  .tags { margin:0; color:var(--accent); font-size:.82rem; }
+  /* Hero */
+  .hero { position:relative; min-height:100svh; display:grid; align-items:center; background:var(--navy-950) center / cover no-repeat; color:#fff; overflow:hidden; }
+  .hero .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5; filter:saturate(.7); transform:scale(1.34); /* 動画に焼き込まれた上下の黒帯を隠す */ }
+  .tint { position:absolute; inset:0; background:
+      radial-gradient(120% 80% at 20% 100%, rgba(5,13,32,.95), transparent 60%),
+      linear-gradient(180deg, rgba(10,26,58,.55), rgba(10,26,58,.75) 60%, var(--navy-950)); mix-blend-mode:normal; }
+  .hero-inner { position:relative; padding-top:120px; padding-bottom:120px; }
+  .eyebrow { margin:0 0 18px; font-family:var(--font-mincho); font-weight:600; font-size:clamp(1rem,2vw,1.25rem); letter-spacing:.14em; color:var(--honey-soft); animation:rise 1s .2s var(--ease) both; }
+  .wordmark { margin:0; font-family:var(--font-en); font-weight:800; font-size:clamp(3.4rem,13vw,10.5rem); line-height:.92; letter-spacing:.04em; display:flex; flex-wrap:wrap; column-gap:.28em; }
+  .wordmark span { display:inline-block; animation:rise 1.1s var(--ease) both; }
+  .wordmark span:nth-child(1) { animation-delay:.35s; }
+  .wordmark span:nth-child(2) { animation-delay:.5s; font-weight:400; color:transparent; -webkit-text-stroke:2px rgba(255,255,255,.9); }
+  .sub { margin:22px 0 40px; font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.3rem,3vw,2rem); letter-spacing:.3em; animation:rise 1s .7s var(--ease) both; }
+  .cta { display:flex; gap:12px; flex-wrap:wrap; animation:rise 1s .85s var(--ease) both; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:.92rem; letter-spacing:.06em; transition:transform .3s var(--ease), background .3s, color .3s; }
+  .btn.primary { background:var(--honey); color:var(--navy-950); }
+  .btn.primary:hover { background:var(--honey-soft); transform:translateY(-2px); }
+  .btn.ghost { border:1px solid rgba(255,255,255,.45); color:#fff; }
+  .btn.ghost:hover { background:rgba(255,255,255,.1); transform:translateY(-2px); }
+  @keyframes rise { from { opacity:0; transform:translateY(28px); } }
+  .scroll { position:absolute; left:50%; bottom:28px; width:26px; height:42px; margin-left:-13px; border:1.5px solid rgba(255,255,255,.5); border-radius:14px; }
+  .scroll span { position:absolute; left:50%; top:8px; width:4px; height:8px; margin-left:-2px; background:var(--honey); border-radius:2px; animation:wheel 1.8s infinite; }
+  @keyframes wheel { 0% { opacity:0; transform:translateY(0); } 30% { opacity:1; } 100% { opacity:0; transform:translateY(14px); } }
+
+  /* Mission */
+  .mission { padding:140px 0 120px; }
+  .mission .grid { display:grid; grid-template-columns:5fr 7fr; gap:72px; align-items:start; }
+  .mission .head { position:sticky; top:120px; }
+  .mtitle { font-family:var(--font-mincho); font-weight:800; font-size:clamp(2.4rem,5.4vw,4.2rem); line-height:1.3; margin:0 0 32px; color:var(--navy-900); letter-spacing:.06em; }
+  .name-note { font-size:.86rem; color:var(--muted); border-left:2px solid var(--honey); padding-left:16px; margin:0; max-width:340px; }
+  .name-note b { font-family:var(--font-en); color:var(--navy-900); }
+  .text p { margin:0 0 1.4em; }
+  .text .lead { font-size:1.18rem; font-weight:700; line-height:1.9; color:var(--navy-900); }
+  blockquote { margin:2.2em 0; padding:28px 0 28px 28px; border-left:3px solid var(--navy-900); font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.25rem,2.4vw,1.6rem); line-height:1.7; color:var(--navy-900); }
+  .closing { font-weight:700; color:var(--navy-900); }
+  @media (max-width:860px) {
+    .mission { padding:96px 0 72px; }
+    .mission .grid { grid-template-columns:1fr; gap:36px; }
+    .mission .head { position:static; }
+    .mtitle br { display:none; }
+  }
+
+  /* Mosaic */
+  .mosaic { padding:0 0 120px; overflow:hidden; }
+  .hrow { display:flex; gap:1.2%; }
+  .hrow.r1 { margin-left:11.25%; margin-top:-5.1%; }
+  .hex { width:21.3%; aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-800); }
+  .hex img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1s var(--ease), filter .6s; filter:grayscale(.35) contrast(1.05); }
+  .hex:hover img { transform:scale(1.08); filter:none; }
+
+  /* Programs */
+  .programs { position:relative; background:var(--navy-900); color:var(--on-navy); padding:120px 0 130px; overflow:hidden; }
+  .programs .wrap { position:relative; }
+  .group { margin-top:56px; }
+  .ghead { display:flex; align-items:baseline; justify-content:space-between; gap:12px 24px; flex-wrap:wrap; border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:14px; margin-bottom:24px; }
+  .ghead h3 { margin:0; font-family:var(--font-en); font-weight:800; font-size:1.3rem; letter-spacing:.06em; }
+  .ghead p { margin:0; color:var(--on-navy-muted); font-size:.86rem; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:22px; }
+  .cards.summit { grid-template-columns:repeat(3,1fr); }
+  .cards.summit > :global(:first-child) { grid-column:1 / -1; }
+  @media (max-width:900px) { .cards.summit { grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px) { .cards.summit { grid-template-columns:1fr; } }
+
+  /* People */
+  .people { padding:130px 0 140px; }
+  .advisors { display:grid; gap:28px; }
+  .advisor { display:grid; grid-template-columns:180px 1fr; gap:40px; align-items:start; background:var(--card); border-radius:22px; padding:36px; box-shadow:0 20px 40px -30px rgba(10,26,58,.35); }
+  .hexframe { aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
+  .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
+  .advisor:hover .hexframe img, .member:hover .hexframe img { transform:scale(1.06); }
+  .people h3 { margin:0 0 4px; font-size:1.15rem; }
+  .role { margin:0 0 12px; color:var(--muted); font-size:.84rem; line-height:1.7; }
+  .bio { margin:0; font-size:.9rem; line-height:1.9; }
+  .members { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:40px 28px; }
+  .member .hexframe { width:72%; margin:0 0 18px; }
+  .member .bio { font-size:.86rem; }
+  .tags { margin:12px 0 0; display:flex; flex-wrap:wrap; gap:6px; }
+  .tags span { font-size:.72rem; padding:2px 10px; border-radius:999px; background:rgba(10,26,58,.06); color:var(--navy-700); }
+  @media (max-width:700px) {
+    .advisor { grid-template-columns:1fr; gap:20px; padding:24px; }
+    .advisor .hexframe { width:150px; }
+    .members { grid-template-columns:1fr 1fr; gap:32px 16px; }
+    .member .hexframe { width:88%; }
+  }
 </style>
