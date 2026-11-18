@@ -6,6 +6,7 @@ label: "Summit 2026"
 tagline: "パブリックマインド"
 date: "2026.2.7 – 2.8"
 place: "千葉・リソルの森"
+participants: "約80名"
 thumb: "/images/669ac602.jpg"
 concept: true
 

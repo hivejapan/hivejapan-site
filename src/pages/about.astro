@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import people from '../data/people.json';
+import imgs from '../home-images.json';
+---
+<Base title="Hive Japanとは" hero>
+  <PageHead kicker="About" title="Hive Japanとは" />
+
+  <div class="wrap wide-photo reveal"><img src={imgs[1]} alt="HIVE JAPAN Summit の参加者" /></div>
+
+  <!-- ===== Mission（全文） ===== -->
+  <section class="mission">
+    <div class="wrap grid">
+      <div class="head">
+        <p class="kicker">Mission</p>
+        <h2 class="mtitle">日本の<br />未来を<br />切り拓く</h2>
+      </div>
+      <div class="text">
+        <p class="lead">Hive Japanは、「日本を良くしたい」と本気で考えている若者が立場を超えて志で繋がり、領域を超えた変革を共に起こせるような場を生み出すために、立ち上がりました。</p>
+        <p>課題先進国と呼ばれるようになり、少しずつ沈んでいく「日本」に山積する社会課題を一つずつ解決して、日本に明るい未来をもたらすためには、日本を良くしたいと考える有志が領域を超えて変革を起こす必要があります。</p>
+        <p>Hive Japanに集まっているのは、まだ志半ばの若者であり、まだ社会に対して大きなインパクトを与える力はないかもしれません。しかし、それでも少しずつ我々の力で危機を乗り越え、新しい領域を開拓して、未来を切り拓いていきます。</p>
+        <blockquote>いつの時代も、歴史を動かしてきたのは<br />志高き少数のリーダーたちでした。</blockquote>
+        <p>幕末では、薩摩と長州を中心とした若きリーダーにより、国、そして世界をも動かしました。そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
+        <p class="closing">「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== The name ===== -->
+  <section class="name">
+    <div class="wrap grid">
+      <div class="head">
+        <p class="kicker">The Name</p>
+        <h2 class="ntitle"><span>Hive</span>蜂の巣</h2>
+      </div>
+      <p class="ntext reveal">志は共通しているが多様な領域で活躍する若者が、蜂の巣のように出入りをしながらも、この場で得た知見やネットワークをもとに各自の挑戦に活かして欲しいという意味合いを込めて、「Hive（蜂の巣）Japan」と名付けました。</p>
+    </div>
+  </section>
+
+  <!-- ===== Advisors ===== -->
+  <section class="people">
+    <div class="wrap">
+      <p class="kicker">Advisors</p>
+      <h2 class="sec-title">アドバイザー</h2>
+      <div class="advisors">
+        {people.advisors.map((p) => (
+          <article class="advisor reveal">
+            {p.photo && <div class="hexframe lg"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
+            <div>
+              <h3>{p.name}</h3>
+              <p class="role">{p.role}</p>
+              <p class="bio">{p.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="kicker" id="members" style="margin-top:110px">Members</p>
+      <h2 class="sec-title">運営メンバー</h2>
+      <div class="members">
+        {people.members.map((p) => (
+          <article class="member reveal">
+            {p.photo && <div class="hexframe"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
+            <h3>{p.name}</h3>
+            {p.role && <p class="role">{p.role}</p>}
+            {p.tags && <p class="tags">{p.tags.split(/\s+/).filter(Boolean).map((t) => <span>{t}</span>)}</p>}
+            {p.bio && (
+              <details class="more-bio">
+                <summary>プロフィールを読む</summary>
+                <p class="bio">{p.bio}</p>
+              </details>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wide-photo { margin-top:72px; }
+  .wide-photo img { width:100%; aspect-ratio:21 / 9; object-fit:cover; display:block; border-radius:22px; }
+
+  .mission { padding:120px 0 100px; }
+  .grid { display:grid; grid-template-columns:5fr 7fr; gap:72px; align-items:start; }
+  .mission .head { position:sticky; top:120px; }
+  .mtitle { font-family:var(--font-mincho); font-weight:800; font-size:clamp(2.4rem,5.4vw,4.2rem); line-height:1.3; margin:0; color:var(--navy-900); letter-spacing:.06em; }
+  .text p { margin:0 0 1.4em; font-size:1.04rem; }
+  .text .lead { font-size:1.18rem; font-weight:700; line-height:1.9; color:var(--navy-900); }
+  blockquote { margin:2.2em 0; padding:28px 0 28px 28px; border-left:3px solid var(--honey); font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.25rem,2.4vw,1.6rem); line-height:1.7; color:var(--navy-900); }
+  .closing { font-weight:700; color:var(--navy-900); }
+
+  .name { background:var(--navy-900); color:var(--on-navy); padding:110px 0; }
+  .ntitle { margin:0; font-family:var(--font-mincho); font-weight:800; font-size:clamp(2rem,4vw,3rem); letter-spacing:.1em; color:#fff; display:flex; flex-direction:column; gap:6px; }
+  .ntitle span { font-family:var(--font-en); font-size:.5em; letter-spacing:.3em; color:var(--honey); }
+  .ntext { margin:0; font-size:1.06rem; line-height:2.2; align-self:center; }
+
+  .people { padding:130px 0 140px; }
+  .advisors { display:grid; gap:28px; }
+  .advisor { display:grid; grid-template-columns:180px 1fr; gap:40px; align-items:start; background:var(--card); border-radius:22px; padding:36px; box-shadow:0 20px 40px -30px rgba(10,26,58,.35); }
+  .hexframe { aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
+  .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
+  .advisor:hover .hexframe img, .member:hover .hexframe img { transform:scale(1.06); }
+  .people h3 { margin:0 0 4px; font-family:var(--font-mincho); font-weight:800; font-size:1.2rem; letter-spacing:.06em; color:var(--navy-900); }
+  .role { margin:0 0 12px; color:var(--muted); font-size:.84rem; line-height:1.7; }
+  .bio { margin:0; font-size:.9rem; line-height:1.95; }
+  .members { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:48px 28px; align-items:start; }
+  .member .hexframe { width:72%; margin:0 0 18px; }
+  .tags { margin:4px 0 0; display:flex; flex-wrap:wrap; gap:6px; }
+  .tags span { font-size:.72rem; padding:2px 10px; border-radius:999px; background:rgba(10,26,58,.06); color:var(--navy-700); }
+  .more-bio { margin-top:14px; border-top:1px solid var(--line); }
+  .more-bio summary { list-style:none; display:flex; align-items:center; justify-content:space-between; min-height:44px; padding-top:8px; font-size:.82rem; font-weight:700; letter-spacing:.08em; color:var(--navy-700); cursor:pointer; }
+  .more-bio summary::-webkit-details-marker { display:none; }
+  .more-bio summary::after { content:"+"; font-family:var(--font-en); font-size:1.1rem; color:var(--honey); transition:transform .3s var(--ease); }
+  .more-bio[open] summary::after { transform:rotate(45deg); }
+  .more-bio .bio { font-size:.86rem; padding-top:6px; }
+
+  @media (max-width:860px) {
+    .grid { grid-template-columns:1fr; gap:32px; }
+    .mission { padding:88px 0 64px; }
+    .mission .head { position:static; }
+    .mtitle br { display:none; }
+    .wide-photo { margin-top:40px; }
+    .wide-photo img { border-radius:14px; aspect-ratio:16 / 9; }
+  }
+  @media (max-width:700px) {
+    .advisor { grid-template-columns:1fr; gap:20px; padding:24px; }
+    .advisor .hexframe { width:150px; }
+    .members { grid-template-columns:1fr 1fr; gap:36px 16px; }
+    .member .hexframe { width:88%; }
+  }
+</style>

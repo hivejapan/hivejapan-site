@@ -6,6 +6,7 @@ label: "Summit 2023"
 tagline: "立志・仲間・行動"
 date: "2023.2.11 – 2.12"
 place: "千葉・リソルの森"
+participants: "約70名"
 thumb: "/images/af4e35e0.jpg"
 concept: true
 

@@ -6,6 +6,7 @@ label: "Hive Miyagi"
 tagline: "震災から14年目の宮城で復興を問う"
 date: "2025.11.22 – 11.24"
 place: "宮城・石巻／女川"
+participants: "14名"
 thumb: "/images/ac43429d.jpg"
 
 about:

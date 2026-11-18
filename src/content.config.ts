@@ -19,6 +19,7 @@ const pages = defineCollection({
     tagline: z.string().optional(), // カードとページ上部に出るテーマ
     date: z.string().optional(),
     place: z.string().optional(),
+    participants: z.string().optional(), // 参加人数（ページ上部の概要に表示）
     thumb: z.string().optional(), // カードとページ上部の写真
 
     // ---- 開催ページの中身（上から順に表示） ----

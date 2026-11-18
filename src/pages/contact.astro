@@ -5,17 +5,56 @@ import site from '../data/site.json';
 ---
 <Base title="お問い合わせ" hero>
   <PageHead kicker="Contact" title="お問い合わせ" />
-  <div class="wrap box">
-    <p>Hive Japanへのお問い合わせは、下記のメールアドレスまでご連絡ください。</p>
-    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
-    {site.contactFormUrl && <p><a class="form" href={site.contactFormUrl}>お問い合わせフォームはこちら →</a></p>}
-    <p class="ig">最新情報は <a href={site.instagram}>Instagram</a> でも発信しています。</p>
-  </div>
+  <section class="contact">
+    <div class="wrap grid">
+      <div class="intro">
+        <p>Hive Japanへのお問い合わせは、下記のメールアドレスまでご連絡ください。</p>
+        <p class="sub">活動へのご質問、協賛・取材のご相談など、お気軽にお寄せください。</p>
+      </div>
+      <div class="cards">
+        <dl class="rows">
+          <div>
+            <dt>EMAIL</dt>
+            <dd><a class="mail" href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+          <div>
+            <dt>INSTAGRAM</dt>
+            <dd><a href={site.instagram} target="_blank" rel="noopener">@hivejapan2025 ↗</a></dd>
+          </div>
+        </dl>
+        <div class="form">
+          <p class="kicker">Form</p>
+          {site.contactFormUrl ? (
+            <>
+              <p>フォームからもお問い合わせいただけます。</p>
+              <a class="btn" href={site.contactFormUrl} target="_blank" rel="noopener">お問い合わせフォーム <span aria-hidden="true">↗</span></a>
+            </>
+          ) : (
+            <p class="muted">お問い合わせフォームは準備中です。それまではメールでご連絡ください。</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>
 <style>
-  .box { padding-top:80px; padding-bottom:120px; max-width:760px; }
-  .mail { display:inline-block; margin:12px 0 28px; font-family:var(--font-en); font-weight:600; font-size:clamp(1.1rem,3.4vw,1.7rem); color:var(--navy-900); text-decoration:none; border-bottom:2px solid var(--honey); padding-bottom:4px; word-break:break-all; }
-  .mail:hover { color:var(--navy-700); }
-  .form { font-weight:700; color:var(--navy-700); }
-  .ig { color:var(--muted); font-size:.9rem; }
+  .contact { padding:96px 0 140px; }
+  .grid { display:grid; grid-template-columns:5fr 7fr; gap:64px; align-items:start; }
+  .intro p { margin:0 0 1em; font-size:1.06rem; line-height:2.1; }
+  .intro .sub { color:var(--muted); font-size:.92rem; }
+  .cards { display:flex; flex-direction:column; gap:28px; }
+  .rows { margin:0; border-top:1px solid var(--line); }
+  .rows > div { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 24px; padding:24px 0; border-bottom:1px solid var(--line); }
+  .rows dt { font-family:var(--font-en); font-size:.7rem; font-weight:600; letter-spacing:.24em; color:var(--muted); }
+  .rows dd { margin:0; }
+  .rows a { font-family:var(--font-en); font-weight:600; font-size:clamp(1rem,2.4vw,1.25rem); color:var(--navy-900); text-decoration:none; word-break:break-all; }
+  .rows a:hover { color:var(--navy-700); text-decoration:underline; text-underline-offset:4px; }
+  .form { padding:32px; background:var(--card); border-radius:22px; box-shadow:0 20px 40px -32px rgba(10,26,58,.4); }
+  .form p { margin:0 0 18px; }
+  .form .kicker { margin-bottom:10px; }
+  .muted { color:var(--muted); font-size:.92rem; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:999px; background:var(--navy-900); color:#fff; text-decoration:none; font-weight:700; letter-spacing:.06em; transition:background .3s, transform .3s var(--ease); }
+  .btn span { color:var(--honey); }
+  .btn:hover { background:var(--navy-700); transform:translateY(-2px); }
+  @media (max-width:860px) { .grid { grid-template-columns:1fr; gap:36px; } .contact { padding:64px 0 100px; } }
 </style>

@@ -39,6 +39,9 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
     /* body は紺（ページ遷移中に背後に見える色）、本文エリアは main が紙色 */
     body { margin:0; background:var(--navy-950); color:var(--ink); font-family:var(--font-jp); line-height:1.95; letter-spacing:.02em; -webkit-font-smoothing:antialiased; }
     a { color:inherit; }
+    :focus-visible { outline:3px solid var(--honey); outline-offset:3px; border-radius:4px; }
+    .skip { position:absolute; left:12px; top:-60px; z-index:100; padding:10px 16px; background:var(--honey); color:var(--navy-950); font-weight:700; border-radius:8px; text-decoration:none; }
+    .skip:focus { top:12px; }
     img { max-width:100%; height:auto; }
     .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
     @media (max-width:600px) { .wrap { padding:0 16px; } }
@@ -116,6 +119,7 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
   </style>
 </head>
 <body>
+  <a class="skip" href="#content">本文へスキップ</a>
   <header class="site" transition:persist="site-header" transition:name="site-header" transition:animate="none">
     <div class="wrap">
       <a class="home-link" href="/" aria-label="Hive Japan トップ"><Logo /></a>
@@ -131,7 +135,7 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
     </div>
   </header>
 
-  <main class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
+  <main id="content" class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
     <slot />
   </main>
 
@@ -144,7 +148,11 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
       </div>
       <div>
         <h3>PROGRAMS</h3>
-        <ul>{site.nav.flatMap((n) => n.children ?? []).map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+        <ul>
+          <li><a href="/about/">Hive Japanとは</a></li>
+          {site.nav.flatMap((n) => n.children ?? []).map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+          <li><a href="/report-2026/">Summit 2026 レポート</a></li>
+        </ul>
       </div>
       <div>
         <h3>CONTACT</h3>

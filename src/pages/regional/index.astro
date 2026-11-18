@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ProgramList from '../../components/ProgramList.astro';
+import { getPrograms } from '../../lib/programs';
+const regionals = (await getPrograms()).filter((p) => p.kind === 'regional');
+---
+<Base title="Regional Summits" hero>
+  <PageHead kicker="Regional" title="Regional Summits" />
+  <section class="intro">
+    <div class="wrap">
+      <p>東京を離れ、地域の現場に入る。Hive Japan のコミュニティから有志が集い、その土地の課題と未来を問う合宿を各地で開いています。</p>
+    </div>
+  </section>
+  <section class="list">
+    <div class="wrap">
+      <ProgramList items={regionals} />
+      <a class="side" href="/summit/">HIVE JAPAN Summit も見る →</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .intro { padding:88px 0 40px; }
+  .intro p { margin:0; max-width:720px; font-size:1.06rem; line-height:2.1; }
+  .list { padding:24px 0 130px; }
+  .side { display:inline-block; margin-top:40px; font-weight:700; letter-spacing:.06em; color:var(--navy-700); text-decoration:none; }
+  .side:hover { text-decoration:underline; text-underline-offset:4px; }
+</style>

@@ -8,6 +8,7 @@ export type Program = {
   tagline?: string;
   date?: string;
   place?: string;
+  participants?: string;
   thumb?: string;
   external?: boolean;
   order: number;
@@ -46,6 +47,7 @@ export async function getPrograms(): Promise<Program[]> {
       tagline: p.data.tagline,
       date: p.data.date,
       place: p.data.place,
+      participants: p.data.participants,
       thumb: p.data.thumb ?? p.data.photos[0],
       order: p.data.order,
     }));

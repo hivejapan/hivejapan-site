@@ -6,6 +6,7 @@ label: "Summit 2025"
 tagline: "誰も知らない「問い」に挑むあなたへ"
 date: "2025.2.8 – 2.9"
 place: "千葉・リソルの森"
+participants: "約70名"
 thumb: "/images/5c66289a.jpg"
 concept: true
 

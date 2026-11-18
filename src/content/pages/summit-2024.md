@@ -6,6 +6,7 @@ label: "Summit 2024"
 tagline: "志で繋がり、志をアップデートする"
 date: "2024.3.16 – 3.17"
 place: "千葉・リソルの森"
+participants: "約80名"
 thumb: "/images/4bd6d313.jpg"
 concept: true
 

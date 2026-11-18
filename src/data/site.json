@@ -1,13 +1,15 @@
 {
   "nav": [
-    { "label": "Hive Japanとは", "href": "/" },
+    { "label": "Hive Japanとは", "href": "/about/" },
     { "label": "HIVE JAPAN Summit", "children": [
+      { "label": "すべてのSummit", "href": "/summit/" },
       { "label": "Summit 2026", "href": "/summit-2026/" },
       { "label": "Summit 2025", "href": "/summit-2025/" },
       { "label": "Summit 2024", "href": "/summit-2024/" },
       { "label": "Summit 2023", "href": "/summit-2023/" }
     ]},
     { "label": "Regional Summits", "children": [
+      { "label": "すべてのRegional", "href": "/regional/" },
       { "label": "Hive Miyagi", "href": "/miyagi/" },
       { "label": "Hive Okayama", "href": "/okayama/" },
       { "label": "Hive Fukuoka", "href": "https://hivejapaninfo.github.io/hive_fukuoka_2026/index.html" }

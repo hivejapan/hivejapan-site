@@ -20,6 +20,18 @@ const others = [
   ...all.filter((p) => p.id !== page.id && p.kind === d.kind),
   ...all.filter((p) => p.id !== page.id && p.kind !== d.kind),
 ].slice(0, 3);
+// ページ上部の概要（値があるものだけ表示）
+const facts = [
+  { k: 'DATE', v: d.date },
+  { k: isReport ? 'AUTHOR' : 'PLACE', v: d.place },
+  { k: 'PARTICIPANTS', v: d.participants },
+].filter((f) => f.v);
+// Summit の前後の回（古い回 ← → 新しい回）
+const sameKind = all.filter((p) => p.kind === d.kind && !p.external).sort((a, b) => a.order - b.order);
+const idx = sameKind.findIndex((p) => p.id === page.id);
+const prev = d.kind === 'summit' && idx > 0 ? sameKind[idx - 1] : undefined;
+const next = d.kind === 'summit' && idx >= 0 && idx < sameKind.length - 1 ? sameKind[idx + 1] : undefined;
+const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/regional/' : '/#programs';
 ---
 <Base title={d.title} hero>
   <header class="phero">
@@ -27,17 +39,19 @@ const others = [
     <div class="shade"></div>
     <Honeycomb size={68} intensity={0.8} interval={2000} />
     <div class="wrap inner">
-      <nav class="crumb" aria-label="パンくず"><a href="/">Home</a><span>/</span><a href="/#programs">{d.kind ? KIND_LABEL[d.kind] : 'Programs'}</a></nav>
+      <nav class="crumb" aria-label="パンくず"><a href="/">Home</a><span>/</span><a href={listHref}>{d.kind ? KIND_LABEL[d.kind] : 'Programs'}</a></nav>
       <h1>{d.title}</h1>
       {d.tagline && <p class="tagline">{d.tagline}</p>}
-      {(d.date || d.place) && (
-        <ul class="facts">
-          {d.date && <li><span>DATE</span>{d.date}</li>}
-          {d.place && <li><span>{isReport ? 'AUTHOR' : 'PLACE'}</span>{d.place}</li>}
-        </ul>
-      )}
     </div>
   </header>
+
+  {facts.length > 0 && (
+    <section class="factbar" aria-label="開催概要">
+      <dl class="wrap">
+        {facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}
+      </dl>
+    </section>
+  )}
 
   {d.concept && <SummitConcept />}
 
@@ -89,6 +103,7 @@ const others = [
       <div class="wrap">
         <p class="kicker">Special Guests</p>
         <h2 class="sec-title">スペシャルゲスト</h2>
+        <p class="note">肩書は開催当時のものです</p>
         <div class="glist">
           {d.guests.map((g) => (
             <article class="guest reveal">
@@ -96,7 +111,12 @@ const others = [
               <div class="gbody">
                 <h3>{g.name}</h3>
                 {g.titles.length > 0 && <ul class="titles">{g.titles.map((t) => <li>{t}</li>)}</ul>}
-                {g.bio.map((b) => <p>{b}</p>)}
+                {g.bio.length > 0 && (
+                  <details class="more-bio">
+                    <summary>プロフィールを読む</summary>
+                    <div>{g.bio.map((b) => <p>{b}</p>)}</div>
+                  </details>
+                )}
               </div>
             </article>
           ))}
@@ -175,6 +195,15 @@ const others = [
     </section>
   )}
 
+  {(prev || next) && (
+    <nav class="yearnav" aria-label="ほかの年度">
+      <div class="wrap">
+        {prev ? <a class="yn prev" href={prev.href}><span class="arr" aria-hidden="true">←</span><span><em>PREVIOUS</em>{prev.label}</span></a> : <span></span>}
+        {next ? <a class="yn next" href={next.href}><span><em>NEXT</em>{next.label}</span><span class="arr" aria-hidden="true">→</span></a> : <span></span>}
+      </div>
+    </nav>
+  )}
+
   {others.length > 0 && (
     <section class="more">
       <div class="wrap">
@@ -221,13 +250,11 @@ const others = [
   .crumb span { opacity:.5; }
   h1 { margin:0; font-family:var(--font-en); font-weight:800; font-size:clamp(2rem,6vw,4.4rem); line-height:1.15; letter-spacing:.02em; max-width:15em; animation:rise .9s .25s var(--ease) both; }
   .tagline { margin:18px 0 0; font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.1rem,2.6vw,1.7rem); letter-spacing:.1em; color:var(--honey-soft); animation:rise .9s .4s var(--ease) both; max-width:30em; }
-  .facts { list-style:none; margin:28px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:10px; animation:rise .9s .55s var(--ease) both; }
-  .facts li { padding:8px 16px; border:1px solid rgba(255,255,255,.22); border-radius:999px; font-size:.86rem; background:rgba(5,13,32,.35); backdrop-filter:blur(6px); }
-  .facts span { font-family:var(--font-en); font-size:.64rem; letter-spacing:.2em; color:var(--honey); margin-right:10px; }
   @keyframes rise { from { opacity:0; transform:translateY(24px); } }
 
   /* ---- sections ---- */
-  .sec { padding:100px 0; }
+  .sec { padding:120px 0; }
+  @media (max-width:700px) { .sec { padding:80px 0; } }
   .sec + .sec:not(.info):not(.press) { padding-top:0; }
   .narrow { max-width:820px; }
 
@@ -243,22 +270,48 @@ const others = [
   .rc-lead { font-size:.9rem; color:var(--on-navy-muted); }
   .rc-by { font-size:.85rem; color:var(--honey-soft); }
 
-  /* guests */
+  /* guests: 写真つきのカードを並べ、経歴は折りたたみ */
   .guests { background:var(--paper); }
-  .glist { display:grid; gap:24px; }
-  .guest { display:grid; grid-template-columns:160px 1fr; gap:36px; align-items:start; background:var(--card); border-radius:22px; padding:32px; box-shadow:0 20px 40px -32px rgba(10,26,58,.35); }
-  .gphoto { aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
-  .gphoto img { width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block; }
-  .gbody h3 { margin:0 0 8px; font-size:1.3rem; color:var(--navy-900); }
-  .titles { list-style:none; margin:0 0 14px; padding:0; display:grid; gap:2px; }
-  .titles li { position:relative; padding-left:16px; font-size:.86rem; font-weight:700; color:var(--navy-700); line-height:1.7; }
+  .note { margin:-12px 0 36px; font-size:.8rem; color:var(--muted); letter-spacing:.06em; }
+  .glist { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:28px; align-items:start; }
+  .guest { display:flex; flex-direction:column; gap:18px; background:var(--card); border-radius:22px; padding:32px 28px 24px; box-shadow:0 20px 40px -32px rgba(10,26,58,.35); }
+  .gphoto { width:128px; aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
+  .gphoto img { width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block; transition:transform .8s var(--ease); }
+  .guest:hover .gphoto img { transform:scale(1.06); }
+  .gbody h3 { margin:0 0 8px; font-family:var(--font-mincho); font-weight:800; font-size:1.3rem; letter-spacing:.06em; color:var(--navy-900); }
+  .titles { list-style:none; margin:0 0 6px; padding:0; display:grid; gap:2px; }
+  .titles li { position:relative; padding-left:16px; font-size:.84rem; font-weight:700; color:var(--navy-700); line-height:1.7; }
   .titles li::before { content:""; position:absolute; left:0; top:.6em; width:7px; height:8px; background:var(--honey); clip-path:var(--hex); }
-  .gbody p { margin:0 0 .8em; font-size:.92rem; line-height:1.95; }
-  .panel { margin-top:32px; }
-  @media (max-width:700px) {
-    .guest { grid-template-columns:1fr; gap:18px; padding:24px; }
-    .gphoto { width:130px; }
-  }
+  .more-bio { margin-top:10px; border-top:1px solid var(--line); }
+  .more-bio summary { list-style:none; display:flex; align-items:center; justify-content:space-between; min-height:44px; padding:10px 0 0; font-size:.82rem; font-weight:700; letter-spacing:.08em; color:var(--navy-700); cursor:pointer; }
+  .more-bio summary::-webkit-details-marker { display:none; }
+  .more-bio summary::after { content:"+"; font-family:var(--font-en); font-size:1.1rem; color:var(--honey); transition:transform .3s var(--ease); }
+  .more-bio[open] summary::after { transform:rotate(45deg); }
+  .more-bio div { padding-top:8px; }
+  .gbody p { margin:0 0 .8em; font-size:.88rem; line-height:1.95; color:var(--ink); }
+  .panel { margin-top:40px; }
+
+  /* 開催概要バー（ヒーロー直下） */
+  .factbar { background:var(--card); border-bottom:1px solid var(--line); }
+  .factbar dl { margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
+  .factbar dl > div { padding:30px 24px 30px 0; border-right:1px solid var(--line); }
+  .factbar dl > div:last-child { border-right:none; }
+  .factbar dt { font-family:var(--font-en); font-size:.66rem; font-weight:600; letter-spacing:.24em; color:var(--muted); margin-bottom:6px; }
+  .factbar dd { margin:0; font-family:var(--font-mincho); font-weight:800; font-size:1.1rem; letter-spacing:.05em; color:var(--navy-900); }
+  .factbar dl > div:not(:first-child) { padding-left:24px; }
+  @media (max-width:700px) { .factbar dl > div { border-right:none; border-bottom:1px solid var(--line); padding:18px 0 !important; } .factbar dl > div:last-child { border-bottom:none; } }
+
+  /* 前後の年度 */
+  .yearnav { background:var(--paper); border-top:1px solid var(--line); }
+  .yearnav .wrap { display:flex; justify-content:space-between; gap:16px; }
+  .yn { display:flex; align-items:center; gap:18px; min-height:44px; padding:40px 0; text-decoration:none; color:var(--navy-900); }
+  .yn em { display:block; font-style:normal; font-family:var(--font-en); font-size:.66rem; font-weight:600; letter-spacing:.24em; color:var(--muted); }
+  .yn span:not(.arr) { font-family:var(--font-en); font-weight:800; font-size:clamp(1.1rem,2.4vw,1.6rem); }
+  .yn.next { text-align:right; }
+  .arr { display:grid; place-items:center; width:40px; height:46px; clip-path:var(--hex); background:var(--navy-900); color:var(--honey); transition:background .3s, color .3s, transform .4s var(--ease); }
+  .yn:hover .arr { background:var(--honey); color:var(--navy-900); }
+  .yn.prev:hover .arr { transform:translateX(-3px); }
+  .yn.next:hover .arr { transform:translateX(3px); }
 
   /* info */
   .info { background:var(--navy-900); color:var(--on-navy); }

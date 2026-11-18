@@ -4,6 +4,7 @@ import Honeycomb from '../components/Honeycomb.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import people from '../data/people.json';
 import imgs from '../home-images.json';
+import moments from '../data/moments.json';
 import { getPrograms } from '../lib/programs';
 const programs = await getPrograms();
 const summits = programs.filter((p) => p.kind === 'summit');
@@ -41,12 +42,9 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
       </div>
       <div class="text reveal">
         <p class="lead">Hive Japanは、「日本を良くしたい」と本気で考えている若者が立場を超えて志で繋がり、領域を超えた変革を共に起こせるような場を生み出すために、立ち上がりました。</p>
-        <p>志は共通しているが多様な領域で活躍する若者が、蜂の巣のように出入りをしながらも、この場で得た知見やネットワークをもとに各自の挑戦に活かして欲しいという意味合いを込めて、「Hive（蜂の巣）Japan」と名付けました。</p>
         <p>課題先進国と呼ばれるようになり、少しずつ沈んでいく「日本」に山積する社会課題を一つずつ解決して、日本に明るい未来をもたらすためには、日本を良くしたいと考える有志が領域を超えて変革を起こす必要があります。</p>
-        <p>Hive Japanに集まっているのは、まだ志半ばの若者であり、まだ社会に対して大きなインパクトを与える力はないかもしれません。しかし、それでも少しずつ我々の力で危機を乗り越え、新しい領域を開拓して、未来を切り拓いていきます。</p>
         <blockquote>いつの時代も、歴史を動かしてきたのは<br />志高き少数のリーダーたちでした。</blockquote>
-        <p>幕末では、薩摩と長州を中心とした若きリーダーにより、国、そして世界をも動かしました。そして、まさに変化の時代である現代、我々の志高き若き集いが、歴史をも動かす熱きうねりとなるのです。</p>
-        <p class="closing">「日本の未来を切り拓く」、それがHive Japanのミッションです。</p>
+        <a class="textlink" href="/about/">ミッションの全文を読む →</a>
       </div>
     </div>
   </section>
@@ -70,12 +68,12 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
       <h2 class="sec-title">これまでの開催</h2>
 
       <div class="group reveal">
-        <div class="ghead"><h3>HIVE JAPAN Summit</h3><p>年に一度、全国から志ある若者が集う1泊2日の合宿</p></div>
+        <div class="ghead"><h3>HIVE JAPAN Summit</h3><p>年に一度、全国から志ある若者が集う1泊2日の合宿</p><a href="/summit/">一覧へ →</a></div>
         <div class="cards summit">{summits.map((p, i) => <ProgramCard p={p} size={i === 0 ? 'lg' : 'md'} />)}</div>
       </div>
 
       <div class="group reveal">
-        <div class="ghead"><h3>Regional Summits</h3><p>地域の現場に入り、その土地の課題と未来を問う</p></div>
+        <div class="ghead"><h3>Regional Summits</h3><p>地域の現場に入り、その土地の課題と未来を問う</p><a href="/regional/">一覧へ →</a></div>
         <div class="cards">{regionals.map((p) => <ProgramCard p={p} />)}</div>
       </div>
 
@@ -86,36 +84,36 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
     </div>
   </section>
 
-  <!-- ===== Advisors ===== -->
+  <!-- ===== Team preview（詳しくは /about/） ===== -->
   <section class="people">
     <div class="wrap">
-      <p class="kicker">Advisors</p>
-      <h2 class="sec-title">アドバイザー</h2>
-      <div class="advisors">
-        {people.advisors.map((p) => (
-          <article class="advisor reveal">
-            {p.photo && <div class="hexframe lg"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
-            <div>
-              <h3>{p.name}</h3>
-              <p class="role">{p.role}</p>
-              <p class="bio">{p.bio}</p>
-            </div>
-          </article>
-        ))}
+      <div class="phead">
+        <div>
+          <p class="kicker">Community</p>
+          <h2 class="sec-title">運営メンバーとアドバイザー</h2>
+        </div>
+        <a class="textlink" href="/about/#members">メンバー紹介を見る →</a>
       </div>
-
-      <p class="kicker" style="margin-top:96px">Members</p>
-      <h2 class="sec-title">運営メンバー</h2>
-      <div class="members">
-        {people.members.map((p) => (
-          <article class="member reveal">
-            {p.photo && <div class="hexframe"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
-            <h3>{p.name}</h3>
-            {p.role && <p class="role">{p.role}</p>}
-            {p.bio && <p class="bio">{p.bio}</p>}
-            {p.tags && <p class="tags">{p.tags.split(/\s+/).filter(Boolean).map((t) => <span>{t}</span>)}</p>}
-          </article>
+      <ul class="faces">
+        {[...people.advisors, ...people.members].map((p) => (
+          <li class="reveal">
+            <a href="/about/#members">
+              <span class="hexframe">{p.photo && <img src={p.photo} alt="" loading="lazy" />}</span>
+              <span class="nm">{p.name}</span>
+            </a>
+          </li>
         ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Moments：どのページにも載っていなかった写真 ===== -->
+  <section class="moments" aria-label="活動の風景">
+    <div class="wrap">
+      <p class="kicker">Moments</p>
+      <h2 class="sec-title">Hive Japanの風景</h2>
+      <div class="mgrid">
+        {moments.map((src, i) => <img class="reveal" src={src} alt="" loading="lazy" style={`transition-delay:${(i % 4) * 60}ms`} />)}
       </div>
     </div>
   </section>
@@ -185,25 +183,24 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   @media (max-width:900px) { .cards.summit { grid-template-columns:1fr 1fr; } }
   @media (max-width:600px) { .cards.summit { grid-template-columns:1fr; } }
 
-  /* People */
-  .people { padding:130px 0 140px; }
-  .advisors { display:grid; gap:28px; }
-  .advisor { display:grid; grid-template-columns:180px 1fr; gap:40px; align-items:start; background:var(--card); border-radius:22px; padding:36px; box-shadow:0 20px 40px -30px rgba(10,26,58,.35); }
-  .hexframe { aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
+  .textlink { display:inline-block; margin-top:8px; font-weight:700; letter-spacing:.06em; color:var(--navy-700); text-decoration:none; border-bottom:2px solid var(--honey); padding-bottom:2px; }
+  .textlink:hover { color:var(--navy-900); }
+  .ghead a { color:var(--honey); text-decoration:none; font-weight:700; font-size:.86rem; letter-spacing:.06em; }
+  .ghead a:hover { text-decoration:underline; text-underline-offset:4px; }
+
+  /* People preview */
+  .people { padding:130px 0 110px; }
+  .phead { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px 32px; }
+  .faces { list-style:none; margin:16px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:28px 18px; }
+  .faces a { display:flex; flex-direction:column; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
+  .hexframe { display:block; width:100%; aspect-ratio:1 / 1.1547; clip-path:var(--hex); overflow:hidden; background:var(--navy-700); }
   .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
-  .advisor:hover .hexframe img, .member:hover .hexframe img { transform:scale(1.06); }
-  .people h3 { margin:0 0 4px; font-size:1.15rem; }
-  .role { margin:0 0 12px; color:var(--muted); font-size:.84rem; line-height:1.7; }
-  .bio { margin:0; font-size:.9rem; line-height:1.9; }
-  .members { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:40px 28px; }
-  .member .hexframe { width:72%; margin:0 0 18px; }
-  .member .bio { font-size:.86rem; }
-  .tags { margin:12px 0 0; display:flex; flex-wrap:wrap; gap:6px; }
-  .tags span { font-size:.72rem; padding:2px 10px; border-radius:999px; background:rgba(10,26,58,.06); color:var(--navy-700); }
-  @media (max-width:700px) {
-    .advisor { grid-template-columns:1fr; gap:20px; padding:24px; }
-    .advisor .hexframe { width:150px; }
-    .members { grid-template-columns:1fr 1fr; gap:32px 16px; }
-    .member .hexframe { width:88%; }
-  }
+  .faces a:hover img { transform:scale(1.08); }
+  .nm { font-size:.8rem; font-weight:700; text-align:center; line-height:1.5; }
+
+  /* Moments */
+  .moments { padding:0 0 140px; }
+  .mgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .mgrid img { width:100%; aspect-ratio:3 / 2; object-fit:cover; display:block; border-radius:12px; }
+  @media (max-width:860px) { .mgrid { grid-template-columns:repeat(2,1fr); } }
 </style>
