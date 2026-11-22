@@ -3,6 +3,8 @@
   "name": "hivejapan-site",
   "compatibility_date": "2026-11-01",
   "assets": { "directory": "./dist", "not_found_handling": "404-page" },
+  // routes を書くと workers.dev のURLが自動で無効になるので、仮URLも残す
+  "workers_dev": true,
   // 独自ドメイン（Cloudflareのダッシュボードで追加したものと同じ。ここに書いておくとデプロイで外れない）
   "routes": [
     { "pattern": "hivejapan.org", "custom_domain": true },
