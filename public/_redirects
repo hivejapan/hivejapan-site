@@ -1,0 +1,20 @@
+# 旧Squarespaceサイトのページ → 新サイトのページ（SNSや資料に貼られた古いリンクを生かす）
+/hive-japan-summit-2023 /summit-2023/ 301
+/hive-japan-summit-2024 /summit-2024/ 301
+/hive-japan-summit-2025 /summit-2025/ 301
+/hive-japan-summit-2026 /summit-2026/ 301
+/event-1-3-1 /summit-2025/ 301
+/event-1-3-1-2 /summit-2026/ 301
+/event-1-1-1 /miyagi/ 301
+/event-2 /miyagi/ 301
+/event-1-1-2 /okayama/ 301
+/event-reports/hive-japan-2026 /report-2026/ 301
+/event-reports /report-2026/ 301
+/event-reports/* /report-2026/ 301
+/top / 301
+/top-1 / 301
+/top-2 / 301
+/top-3 / 301
+/top-3-1 / 301
+/207594255261 / 301
+/207594255261-1 / 301
