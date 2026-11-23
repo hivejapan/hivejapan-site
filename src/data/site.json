@@ -1,21 +1,21 @@
 {
   "nav": [
-    { "label": "Hive Japanとは", "href": "/" },
-    { "label": "HIVE JAPAN Summit", "children": [
+    { "label": "About", "href": "/about/" },
+    { "label": "HIVE JAPAN SUMMIT", "href": "/summit/", "children": [
       { "label": "Summit 2026", "href": "/summit-2026/" },
       { "label": "Summit 2025", "href": "/summit-2025/" },
       { "label": "Summit 2024", "href": "/summit-2024/" },
       { "label": "Summit 2023", "href": "/summit-2023/" }
     ]},
-    { "label": "Regional Summits", "children": [
-      { "label": "Hive Miyagi", "href": "/miyagi/" },
-      { "label": "Hive Okayama", "href": "/okayama/" },
-      { "label": "Hive Fukuoka", "href": "https://hivejapaninfo.github.io/hive_fukuoka_2026/index.html" }
+    { "label": "Regional Summits", "href": "/regional/", "children": [
+      { "label": "HIVE MIYAGI", "href": "/miyagi/" },
+      { "label": "HIVE OKAYAMA", "href": "/okayama/" },
+      { "label": "HIVE FUKUOKA", "href": "https://hivejapaninfo.github.io/hive_fukuoka_2026/index.html" }
     ]},
-    { "label": "レポート", "href": "/report-2026/" },
-    { "label": "お問い合わせ", "href": "/contact/" }
+    { "label": "Report", "href": "/report-2026/" },
+    { "label": "Contact", "href": "/contact/" }
   ],
   "email": "hivejapan.official@gmail.com",
   "instagram": "https://www.instagram.com/hivejapan2025/",
-  "contactFormUrl": ""
+  "contactFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfgroXfut1E9huA0O71N4qn_2vwSFRW_xg25mCw1W9Z1IW5og/viewform"
 }

@@ -1,0 +1,50 @@
+---
+// 一覧ページ用：年度・地域ごとの横長の行（写真つき）
+import type { Program } from '../lib/programs';
+interface Props { items: Program[]; big?: 'year' | 'label' }
+const { items, big = 'label' } = Astro.props;
+---
+<ol class:list={['plist', `big-${big}`]}>
+  {items.map((p) => (
+    <li class="reveal">
+      <a
+        class="row"
+        href={p.href}
+        {...(p.external ? { target: '_blank', rel: 'noopener', 'data-astro-reload': true } : {})}
+      >
+        <span class="big">{big === 'year' ? String(p.order) : p.label}{p.external && <small> ↗</small>}</span>
+        <span class="txt">
+          {p.tagline && <span class="tag">{p.tagline}</span>}
+          <span class="meta">{[p.date, p.place, p.participants].filter(Boolean).join('　/　')}</span>
+        </span>
+        <span class="thumb">
+          {p.thumb ? <img src={p.thumb} alt="" loading="lazy" data-vt={`cover-${p.id}`} /> : <span class="ph" aria-hidden="true"></span>}
+        </span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </li>
+  ))}
+</ol>
+<style>
+  .plist { list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+  .row { display:grid; grid-template-columns:minmax(150px,220px) 1fr minmax(180px,300px) 44px; gap:20px 48px; align-items:center; padding:36px 0; border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink); }
+  .big { font-family:var(--font-en); font-weight:500; font-size:var(--fs-section); line-height:1; letter-spacing:var(--ls-head); color:var(--navy-900); }
+  .big-label .row { grid-template-columns:minmax(200px,300px) 1fr minmax(180px,300px) 44px; }
+  .big-label .big { font-size:var(--fs-section); line-height:1.1; overflow-wrap:break-word; }
+  .big small { font-size:.4em; color:var(--honey); }
+  .txt { display:flex; flex-direction:column; gap:10px; min-width:0; }
+  .tag { font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-card); line-height:1.6; letter-spacing:var(--ls-head); color:var(--navy-900); }
+  .meta { font-size:.82rem; color:var(--muted); letter-spacing:var(--ls-body); }
+  .thumb { position:relative; display:block; aspect-ratio:4 / 3; border-radius:14px; overflow:hidden; background:var(--navy-700); }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1.1s var(--ease); }
+  .row:hover .thumb img { transform:scale(1.06); }
+  .ph { position:absolute; inset:0; background:radial-gradient(circle at 70% 30%, rgba(233,180,76,.4), transparent 60%), var(--navy-800); }
+  .go { display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:var(--navy-900); color:var(--honey); transition:background .3s, color .3s, transform .4s var(--ease); }
+  .row:hover .go { background:var(--honey); color:var(--navy-900); transform:translateX(3px); }
+  @media (max-width:860px) {
+    .row, .big-label .row { grid-template-columns:1fr; gap:14px; padding:28px 0; }
+    .thumb { order:-1; }
+    .go { display:none; }
+  }
+</style>
+

@@ -16,15 +16,17 @@ const pages = defineCollection({
     kind: z.enum(['summit', 'regional', 'report']).optional(),
     order: z.number().default(0), // 大きいほど前に並ぶ
     label: z.string().optional(), // カードの短い名前
+    tabTitle: z.string().optional(), // ブラウザのタブに出す短い名前（例: Report）
     tagline: z.string().optional(), // カードとページ上部に出るテーマ
     date: z.string().optional(),
     place: z.string().optional(),
+    participants: z.string().optional(), // 参加人数（ページ上部の概要に表示）
     thumb: z.string().optional(), // カードとページ上部の写真
 
     // ---- 開催ページの中身（上から順に表示） ----
     concept: z.boolean().default(false), // 「集え、未来を創る志士たちよ。」の共通文を出すか
     about: z.object({
-      heading: z.string(), // 例: HIVE JAPAN Summit 2025とは
+      heading: z.string(), // 例: HIVE JAPAN SUMMIT 2025とは
       theme: z.string().optional(), // テーマ（見出しの下に大きく）
       text: z.array(z.string()).default([]), // 説明文（段落ごと）
     }).optional(),

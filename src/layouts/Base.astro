@@ -2,14 +2,13 @@
 import { ClientRouter } from 'astro:transitions';
 import site from '../data/site.json';
 import Logo from '../components/Logo.astro';
-import Honeycomb from '../components/Honeycomb.astro';
-import { hexReveal } from '../lib/transitions';
+import { pageFade } from '../lib/transitions';
 interface Props { title?: string; description?: string; hero?: boolean }
-const { title, description = '「日本の未来を切り拓く」— 志ある若者が領域を超えて集うコミュニティ Hive Japan', hero = false } = Astro.props;
-const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
+const { title, description = '「日本の未来を切り拓く」— 志ある若者が領域を超えて集うコミュニティ HIVE JAPAN', hero = false } = Astro.props;
+const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
 ---
 <!doctype html>
-<html lang="ja" transition:animate={hexReveal}>
+<html lang="ja" transition:animate={pageFade}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +18,7 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet" />
   <ClientRouter />
   <style is:global>
     :root {
@@ -27,9 +26,13 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
       --honey:#e9b44c; --honey-soft:#f3d48e;
       --paper:#f5f6f9; --card:#ffffff; --ink:#0d1b36; --muted:#5a6680; --line:rgba(13,27,54,.12);
       --on-navy:#e8edf7; --on-navy-muted:#9fb0d0;
-      --font-jp:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
-      --font-mincho:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
-      --font-en:"Montserrat",var(--font-jp);
+      --font-jp:"Noto Sans JP","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,system-ui,sans-serif;
+      --font-mincho:var(--font-jp); /* 旧サイト hivejapan.org に合わせ Noto Sans JP に統一 */
+      --font-en:var(--font-jp);
+      /* 文字サイズは4段階：ページタイトル／セクション／カード・小見出し／本文(1rem) */
+      --fs-title:clamp(2.6rem,8vw,6rem); --fs-section:clamp(1.7rem,3.6vw,2.6rem); --fs-card:clamp(1.1rem,2.2vw,1.4rem); --fs-label:.72rem;
+      /* 字間は3段階：本文／見出し／英字ラベル */
+      --ls-body:.02em; --ls-head:.04em; --ls-label:.2em;
       --hex: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
       --ease: cubic-bezier(.2,.8,.2,1);
       color-scheme: light;
@@ -37,26 +40,31 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
     /* body は紺（ページ遷移中に背後に見える色）、本文エリアは main が紙色 */
-    body { margin:0; background:var(--navy-950); color:var(--ink); font-family:var(--font-jp); line-height:1.95; letter-spacing:.02em; -webkit-font-smoothing:antialiased; }
+    body { margin:0; background:var(--navy-950); color:var(--ink); font-family:var(--font-jp); font-weight:300; line-height:1.95; letter-spacing:var(--ls-body); -webkit-font-smoothing:antialiased; }
     a { color:inherit; }
+    :focus-visible { outline:3px solid var(--honey); outline-offset:3px; border-radius:4px; }
+    .skip { position:absolute; left:12px; top:-60px; z-index:100; padding:10px 16px; background:var(--honey); color:var(--navy-950); font-weight:700; border-radius:8px; text-decoration:none; }
+    .skip:focus { top:12px; }
     img { max-width:100%; height:auto; }
     .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
     @media (max-width:600px) { .wrap { padding:0 16px; } }
-    .kicker { font-family:var(--font-en); font-size:.74rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--honey); display:inline-flex; align-items:center; gap:10px; margin:0 0 14px; }
-    .kicker::before { content:""; width:10px; height:11.5px; background:currentColor; clip-path:var(--hex); }
-    .sec-title { font-family:var(--font-mincho); font-weight:800; font-size:clamp(1.7rem,3.6vw,2.6rem); line-height:1.4; margin:0 0 28px; letter-spacing:.04em; }
+    .kicker { font-family:var(--font-en); font-size:var(--fs-label); font-weight:500; letter-spacing:var(--ls-label); text-transform:uppercase; color:inherit; opacity:.72; display:inline-flex; align-items:center; gap:10px; margin:0 0 14px; }
+    .kicker::before { content:""; width:24px; height:1px; background:var(--honey); }
+    .sec-title { font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-section); line-height:1.4; margin:0 0 28px; letter-spacing:var(--ls-head); }
 
     /* ---------- header ---------- */
     header.site { position:fixed; inset:0 0 auto; z-index:50; color:var(--on-navy); transition:background .4s var(--ease), box-shadow .4s var(--ease); background:rgba(10,26,58,.82); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4); box-shadow:0 1px 0 rgba(255,255,255,.06); }
     html.on-hero:not(.scrolled) header.site { background:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
     header.site .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; height:68px; }
-    .home-link { text-decoration:none; position:relative; z-index:2; }
+    .home-link { text-decoration:none; position:relative; z-index:2; top:4px; } /* ロゴ文字の中心をメニュー文字の中心に合わせる */
     nav.main > ul { list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:4px; font-size:.88rem; }
     nav.main li { position:relative; }
     nav.main a, nav.main summary { display:block; padding:8px 14px; text-decoration:none; color:var(--on-navy); opacity:.86; border-radius:999px; cursor:pointer; transition:opacity .2s, background .2s; list-style:none; }
     nav.main summary::-webkit-details-marker { display:none; }
     nav.main summary::after { content:""; display:inline-block; width:6px; height:6px; margin-left:8px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-3px) rotate(45deg); transition:transform .25s; }
     nav.main details[open] summary::after { transform:translateY(0) rotate(-135deg); }
+    nav.main summary a { display:inline; padding:0; border:none; border-radius:0; background:none; opacity:1; }
+    nav.main summary a:hover { background:none; }
     nav.main a:hover, nav.main summary:hover, nav.main details[open] summary { opacity:1; background:rgba(255,255,255,.08); }
     nav.main .sub { list-style:none; margin:0; padding:8px; position:absolute; top:calc(100% + 10px); left:0; min-width:220px; background:var(--navy-900); border:1px solid rgba(255,255,255,.1); border-radius:14px; box-shadow:0 20px 40px -12px rgba(0,0,0,.5); animation:drop .25s var(--ease); }
     nav.main .sub a { border-radius:8px; padding:9px 14px; }
@@ -88,20 +96,16 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
     footer.site .wrap { position:relative; padding-top:72px; padding-bottom:40px; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:40px; }
     footer.site .brand { color:var(--on-navy); text-decoration:none; }
     footer.site p { margin:14px 0 0; }
-    footer.site h3 { font-family:var(--font-en); font-size:.72rem; letter-spacing:.24em; color:var(--honey); margin:0 0 12px; font-weight:600; }
     footer.site ul { list-style:none; margin:0; padding:0; }
     footer.site li a { text-decoration:none; display:inline-block; padding:3px 0; }
     footer.site a:hover { color:var(--on-navy); }
-    footer.site .copy { grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.08); padding-top:22px; font-size:.76rem; letter-spacing:.06em; }
+    footer.site .copy { grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.08); padding-top:22px; font-size:.76rem; letter-spacing:var(--ls-body); }
     @media (max-width:760px) { footer.site .wrap { grid-template-columns:1fr; gap:28px; } }
 
     /* ---------- page transitions ---------- */
-    @keyframes hive-page-out { to { opacity:0; transform:scale(.97); filter:blur(4px); } }
-    @keyframes hive-hex-in {
-      from { clip-path:polygon(50% 46%, 53% 48%, 53% 52%, 50% 54%, 47% 52%, 47% 48%); }
-      to   { clip-path:polygon(50% -60%, 165% -5%, 165% 105%, 50% 160%, -65% 105%, -65% -5%); }
-    }
-    /* サムネイル→カバー写真のモーフィング */
+    @keyframes hive-page-out { to { opacity:0; } }
+    @keyframes hive-fade-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    /* サムネイル →カバー写真のモーフィング */
     ::view-transition-group(*) { animation-duration:.7s; animation-timing-function:cubic-bezier(.7,0,.2,1); }
     /* 古いページが沈んだあとに見える紺の背景 */
     html::view-transition { background:var(--navy-950); }
@@ -116,46 +120,47 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
   </style>
 </head>
 <body>
+  <a class="skip" href="#content">本文へスキップ</a>
   <header class="site" transition:persist="site-header" transition:name="site-header" transition:animate="none">
     <div class="wrap">
-      <a class="home-link" href="/" aria-label="Hive Japan トップ"><Logo /></a>
+      <a class="home-link" href="/" aria-label="HIVE JAPANトップ"><Logo /></a>
       <input type="checkbox" id="menu" class="menu-toggle" />
       <label for="menu" class="menu-btn" aria-label="メニュー"><span></span></label>
       <nav class="main" aria-label="メイン">
         <ul>
           {site.nav.map((n) => n.children ? (
-            <li><details><summary>{n.label}</summary><ul class="sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
+            <li><details><summary><a href={n.href}>{n.label}</a></summary><ul class="sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
           ) : (<li><a href={n.href}>{n.label}</a></li>))}
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
+  <main id="content" class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
     <slot />
   </main>
 
   <footer class="site">
-    <Honeycomb size={56} intensity={0.6} interval={3000} />
     <div class="wrap">
       <div>
         <a class="brand" href="/"><Logo /></a>
-        <p>日本の未来を切り拓く ── 志ある若者が、領域を超えて集うコミュニティ。</p>
       </div>
       <div>
-        <h3>PROGRAMS</h3>
-        <ul>{site.nav.flatMap((n) => n.children ?? []).map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
-      </div>
-      <div>
-        <h3>CONTACT</h3>
         <ul>
-          <li>運営団体 Hive Japan運営委員会</li>
-          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><a href={site.instagram}>Instagram</a></li>
-          <li><a href="/contact/">お問い合わせ</a></li>
+          <li><a href="/about/">About</a></li>
+          {site.nav.filter((n) => n.children).map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/report-2026/">Report</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
-      <p class="copy">© Hive Japan {new Date().getFullYear()} All rights reserved.</p>
+      <div>
+        <ul>
+          <li>運営団体 HIVE JAPAN 運営委員会</li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={site.instagram}>Instagram</a></li>
+        </ul>
+      </div>
+      <p class="copy">© HIVE JAPAN {new Date().getFullYear()} All rights reserved.</p>
     </div>
   </footer>
 
@@ -179,7 +184,7 @@ const fullTitle = title ? `${title} — Hive Japan` : 'Hive Japan';
       document.querySelectorAll('.reveal').forEach((el) => io!.observe(el));
     }
     document.addEventListener('astro:page-load', setup);
-    // サムネイル→カバー写真のモーフィング：クリックしたカードの写真だけに名前を付ける
+    // サムネイル →カバー写真のモーフィング：クリックしたカードの写真だけに名前を付ける
     document.addEventListener('astro:before-preparation', (e: any) => {
       const img = e.sourceElement?.closest?.('a.pcard')?.querySelector('img[data-vt]') as HTMLElement | null;
       if (img) img.style.viewTransitionName = img.dataset.vt!;

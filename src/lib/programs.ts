@@ -8,13 +8,14 @@ export type Program = {
   tagline?: string;
   date?: string;
   place?: string;
+  participants?: string;
   thumb?: string;
   external?: boolean;
   order: number;
 };
 
 export const KIND_LABEL = {
-  summit: 'HIVE JAPAN Summit',
+  summit: 'HIVE JAPAN SUMMIT',
   regional: 'Regional Summit',
   report: 'Report',
 } as const;
@@ -25,10 +26,11 @@ const externals: Program[] = [
     id: 'fukuoka',
     kind: 'regional',
     href: 'https://hivejapaninfo.github.io/hive_fukuoka_2026/index.html',
-    label: 'Hive Fukuoka',
+    label: 'HIVE FUKUOKA',
     tagline: '特設サイトへ',
     date: '2026',
     place: '福岡',
+    thumb: '/images/hive-fukuoka.jpg',
     external: true,
     order: 202600,
   },
@@ -46,6 +48,7 @@ export async function getPrograms(): Promise<Program[]> {
       tagline: p.data.tagline,
       date: p.data.date,
       place: p.data.place,
+      participants: p.data.participants,
       thumb: p.data.thumb ?? p.data.photos[0],
       order: p.data.order,
     }));

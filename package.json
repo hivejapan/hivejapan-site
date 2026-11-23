@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "astro build && wrangler deploy",
+    "share": "astro build && wrangler versions upload --preview-alias feedback"
   },
   "dependencies": {
     "astro": "5.18.2"

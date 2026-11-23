@@ -2,6 +2,7 @@
   // Cloudflare Workers の静的配信。npm run build で dist/ を作り、wrangler deploy で公開
   "name": "hivejapan-site",
   "compatibility_date": "2026-11-01",
+  "preview_urls": true,
   "assets": { "directory": "./dist", "not_found_handling": "404-page" },
   // routes を書くと workers.dev のURLが自動で無効になるので、仮URLも残す
   "workers_dev": true,

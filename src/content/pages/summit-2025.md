@@ -1,21 +1,22 @@
 ---
-title: "HIVE JAPAN Summit 2025"
+title: "HIVE JAPAN SUMMIT 2025"
 kind: "summit"
 order: 2025
 label: "Summit 2025"
 tagline: "誰も知らない「問い」に挑むあなたへ"
-date: "2025.2.8 – 2.9"
+date: "2025.2.8–2.9"
 place: "千葉・リソルの森"
+participants: "約70名"
 thumb: "/images/5c66289a.jpg"
-concept: true
+concept: false
 
 about:
-  heading: "HIVE JAPAN Summit 2025とは"
+  heading: "HIVE JAPAN SUMMIT 2025とは"
   theme: "誰も知らない「問い」に挑むあなたへ"
   text:
     - "｢未来を創る志士たち｣となる若者を対象にした、1泊2日の合宿型イベントです。"
     - "2025年は、2月8日〜9日に千葉県にて実施しました。"
-    - "約70名の参加者が２日間を通して「日本の未来」について語り合い、Hive Japan 2025のコミュニティ創りのスタートラインとなる熱い場となりました。"
+    - "約70名の参加者が２日間を通して「日本の未来」について語り合い、HIVE JAPAN 2025のコミュニティ創りのスタートラインとなる熱い場となりました。"
 
 guests:
   - name: "各務 茂夫 氏"

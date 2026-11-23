@@ -1,20 +1,21 @@
 ---
-title: "HIVE JAPAN Summit 2023"
+title: "HIVE JAPAN SUMMIT 2023"
 kind: "summit"
 order: 2023
 label: "Summit 2023"
 tagline: "立志・仲間・行動"
-date: "2023.2.11 – 2.12"
+date: "2023.2.11–2.12"
 place: "千葉・リソルの森"
+participants: "約70名"
 thumb: "/images/af4e35e0.jpg"
-concept: true
+concept: false
 
 about:
-  heading: "HIVE JAPAN Summit 2023とは"
+  heading: "HIVE JAPAN SUMMIT 2023とは"
   theme: "立志・仲間・行動"
   text:
     - "2023年2月11日〜12日に千葉県にて実施しました、1泊2日の合宿型イベントです。"
-    - "｢未来を創る志士たち｣となる若者を対象に、約70名の参加者が２日間を通して「日本の未来」について語り合い、Hive Japan 2023のコミュニティ創りのスタートラインとなる熱い場となりました。"
+    - "｢未来を創る志士たち｣となる若者を対象に、約70名の参加者が２日間を通して「日本の未来」について語り合い、HIVE JAPAN 2023のコミュニティ創りのスタートラインとなる熱い場となりました。"
 
 guests:
   - name: "各務 茂夫 氏"
