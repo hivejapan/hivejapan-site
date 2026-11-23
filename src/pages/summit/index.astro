@@ -1,12 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
+import SummitConcept from '../../components/SummitConcept.astro';
 import ProgramList from '../../components/ProgramList.astro';
 import { getPrograms } from '../../lib/programs';
 const summits = (await getPrograms()).filter((p) => p.kind === 'summit');
 ---
-<Base title="HIVE JAPAN Summit" hero>
-  <PageHead kicker="Summit" title="HIVE JAPAN Summit" />
+<Base title="HIVE JAPAN SUMMIT" hero>
+  <PageHead kicker="Summit" title="HIVE JAPAN SUMMIT" image="/images/669ac602.jpg" />
+  <SummitConcept />
   <section class="intro">
     <div class="wrap">
       <p>「未来を創る志士たち」となる若者を対象にした、1泊2日の合宿型イベント。毎年、千葉県の Sport &amp; Do Resort リソルの森に全国から志ある若者が集い、「日本の未来」について語り合います。</p>
@@ -23,6 +25,6 @@ const summits = (await getPrograms()).filter((p) => p.kind === 'summit');
   .intro { padding:88px 0 40px; }
   .intro p { margin:0; max-width:720px; font-size:1.06rem; line-height:2.1; }
   .list { padding:24px 0 130px; }
-  .side { display:inline-block; margin-top:40px; font-weight:700; letter-spacing:.06em; color:var(--navy-700); text-decoration:none; }
+  .side { display:inline-block; margin-top:40px; font-weight:700; letter-spacing:var(--ls-body); color:var(--navy-700); text-decoration:none; }
   .side:hover { text-decoration:underline; text-underline-offset:4px; }
 </style>

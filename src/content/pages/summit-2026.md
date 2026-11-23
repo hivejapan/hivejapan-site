@@ -1,28 +1,28 @@
 ---
-title: "HIVE JAPAN Summit 2026"
+title: "HIVE JAPAN SUMMIT 2026"
 kind: "summit"
 order: 2026
 label: "Summit 2026"
 tagline: "パブリックマインド"
-date: "2026.2.7 – 2.8"
+date: "2026.2.7–2.8"
 place: "千葉・リソルの森"
 participants: "約80名"
 thumb: "/images/669ac602.jpg"
-concept: true
+concept: false
 
 about:
-  heading: "HIVE JAPAN Summit 2026とは"
+  heading: "HIVE JAPAN SUMMIT 2026とは"
   theme: "パブリックマインド"
   text:
     - "｢未来を創る志士たち｣となる若者を対象にした、1泊2日の合宿型イベントです。"
     - "2026年は、2月7日〜8日に千葉県にて実施しました。"
-    - "約70名の参加者が２日間を通して「日本の未来」について語り合い、Hive Japan 2026のコミュニティ創りのスタートラインとなる熱い場となりました。"
+    - "約70名の参加者が２日間を通して「日本の未来」について語り合い、HIVE JAPAN 2026のコミュニティ創りのスタートラインとなる熱い場となりました。"
 
 report:
   href: "/report-2026/"
-  title: "HIVE JAPAN Summit 2026 Well-being イベントレポート"
+  title: "HIVE JAPAN SUMMIT 2026 Well-being イベントレポート"
   author: "井上寛人"
-  lead: "HIVE JAPAN Summit 2026に参加した井上寛人さんより、合宿参加後に綴ったレポートを寄稿いただきました。志ある若者たちは、なぜこの場で深くつながり、ウェルビーイングを高めていけるのか。"
+  lead: "HIVE JAPAN SUMMIT 2026に参加した井上寛人さんより、合宿参加後に綴ったレポートを寄稿いただきました。志ある若者たちは、なぜこの場で深くつながり、ウェルビーイングを高めていけるのか。"
 
 guests:
   - name: "深井 龍之介 氏"

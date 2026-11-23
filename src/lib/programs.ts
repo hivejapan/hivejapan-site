@@ -15,7 +15,7 @@ export type Program = {
 };
 
 export const KIND_LABEL = {
-  summit: 'HIVE JAPAN Summit',
+  summit: 'HIVE JAPAN SUMMIT',
   regional: 'Regional Summit',
   report: 'Report',
 } as const;
@@ -26,10 +26,11 @@ const externals: Program[] = [
     id: 'fukuoka',
     kind: 'regional',
     href: 'https://hivejapaninfo.github.io/hive_fukuoka_2026/index.html',
-    label: 'Hive Fukuoka',
+    label: 'HIVE FUKUOKA',
     tagline: '特設サイトへ',
     date: '2026',
     place: '福岡',
+    thumb: '/images/hive-fukuoka.jpg',
     external: true,
     order: 202600,
   },

@@ -1,22 +1,22 @@
 ---
-title: "HIVE JAPAN Summit 2024"
+title: "HIVE JAPAN SUMMIT 2024"
 kind: "summit"
 order: 2024
 label: "Summit 2024"
 tagline: "志で繋がり、志をアップデートする"
-date: "2024.3.16 – 3.17"
+date: "2024.3.16–3.17"
 place: "千葉・リソルの森"
 participants: "約80名"
 thumb: "/images/4bd6d313.jpg"
-concept: true
+concept: false
 
 about:
-  heading: "HIVE JAPAN Summit 2024とは"
+  heading: "HIVE JAPAN SUMMIT 2024とは"
   theme: "志で繋がり、志をアップデートする"
   text:
     - "｢未来を創る志士たち｣となる若者を対象にした、1泊2日の合宿型イベントです。"
     - "2024年度は、3月16日〜17日に千葉県にて実施しました。"
-    - "約80名の参加者が２日間を通して「日本の未来」について語り合い、Hive Japan 2024のコミュニティ創りのスタートラインとなる熱い場となりました。"
+    - "約80名の参加者が２日間を通して「日本の未来」について語り合い、HIVE JAPAN 2024のコミュニティ創りのスタートラインとなる熱い場となりました。"
 
 guests:
   - name: "Peter Vesterbacka 氏"

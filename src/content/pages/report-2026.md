@@ -1,5 +1,6 @@
 ---
-title: "HIVE JAPAN Summit 2026 Well-being イベントレポート"
+title: "HIVE JAPAN SUMMIT 2026 Well-being イベントレポート"
+tabTitle: "Report"
 kind: "report"
 order: 2026
 label: "Summit 2026 Well-being レポート"
@@ -16,7 +17,7 @@ author:
       url: "https://www.instagram.com/hiro_to_be/"
 backTo:
   href: "/summit-2026/"
-  label: "HIVE JAPAN Summit 2026 開催記録に戻る"
+  label: "HIVE JAPAN SUMMIT 2026 開催記録に戻る"
 ---
 
 2026年2月7日・8日の2日間にわたり、「HIVE JAPAN Summit 2026」が開催された。会場となったのは、千葉県長生郡長柄町にある「Sport & Do Resort リソルの森」である。体育館や食堂などを備えた複合施設を舞台に、大企業に勤める会社員、起業家、研究者、公務員、医師、学生など、多様なバックグラウンドを持つ20代の志ある若者約80名が集まった。

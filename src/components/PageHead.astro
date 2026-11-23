@@ -1,15 +1,32 @@
 ---
-interface Props { kicker: string; title: string }
-const { kicker, title } = Astro.props;
+interface Props { kicker?: string; title: string; image?: string }
+const { kicker, title, image } = Astro.props;
 ---
-<header class="phead">
+<header class:list={['phead', { photo: image }]}>
+  {image && <img class="bg" src={image} alt="" />}
+  {image && <div class="tint"></div>}
   <div class="wrap inner">
-    <p class="kicker">{kicker}</p>
+    {kicker && <p class="kicker">{kicker}</p>}
     <h1>{title}</h1>
   </div>
 </header>
 <style>
   .phead { position:relative; background:linear-gradient(180deg,var(--navy-950),var(--navy-900)); color:#fff; overflow:hidden; }
   .inner { position:relative; padding-top:160px; padding-bottom:72px; }
-  h1 { margin:0; font-family:var(--font-mincho); font-weight:800; font-size:clamp(2rem,5vw,3.4rem); letter-spacing:.08em; }
+  h1 { margin:0; font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-title); line-height:1.05; letter-spacing:var(--ls-head); }
+
+  /* Photo variant — matches top-page hero */
+  .photo { min-height:min(78svh,720px); display:grid; align-items:end; background:var(--navy-950); }
+  .photo .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.55; filter:saturate(.7); }
+  .photo .tint { position:absolute; inset:0; background:
+      radial-gradient(120% 80% at 20% 100%, rgba(5,13,32,.95), transparent 60%),
+      linear-gradient(180deg, rgba(10,26,58,.55), rgba(10,26,58,.7) 60%, var(--navy-950)); }
+  .photo .inner { padding-top:200px; padding-bottom:96px; }
+  .kicker { animation:rise 1s .2s var(--ease) both; }
+  h1 { animation:rise 1.1s .35s var(--ease) both; }
+  
+  @keyframes rise { from { opacity:0; transform:translateY(28px); } }
+  @media (prefers-reduced-motion: reduce) { .kicker, h1 { animation:none; } }
 </style>
+
+

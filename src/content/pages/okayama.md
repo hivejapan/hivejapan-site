@@ -1,10 +1,10 @@
 ---
-title: "Hive Okayama"
+title: "HIVE OKAYAMA"
 kind: "regional"
 order: 202505
-label: "Hive Okayama"
+label: "HIVE OKAYAMA"
 tagline: "地域と都市部の融合"
-date: "2025.5.23 – 5.25"
+date: "2025.5.23–5.25"
 place: "岡山・語らい座"
 thumb: "/images/51e4087d.jpg"
 
