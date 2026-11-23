@@ -12,9 +12,9 @@
 /event-reports /report-2026/ 301
 /event-reports/* /report-2026/ 301
 /top / 301
-/top-1 / 301
+/top-1 /about/ 301
 /top-2 / 301
-/top-3 / 301
-/top-3-1 / 301
+/top-3 /about/ 301
+/top-3-1 /summit/ 301
 /207594255261 / 301
 /207594255261-1 / 301
