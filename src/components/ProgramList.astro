@@ -36,7 +36,7 @@ const { items, big = 'label' } = Astro.props;
   .txt { display:flex; flex-direction:column; gap:10px; min-width:0; }
   .tag { font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-card); line-height:1.6; letter-spacing:var(--ls-head); color:var(--navy-900); }
   .meta { font-size:.82rem; color:var(--muted); letter-spacing:var(--ls-body); }
-  .thumb { position:relative; display:block; aspect-ratio:4 / 3; border-radius:14px; overflow:hidden; background:var(--navy-700); }
+  .thumb { position:relative; display:block; aspect-ratio:4 / 3; border-radius:0; overflow:hidden; background:var(--navy-700); }
   .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1.1s var(--ease); }
   .row:hover .thumb img { transform:scale(1.06); }
   .ph { position:absolute; inset:0; background:radial-gradient(circle at 70% 30%, rgba(233,180,76,.4), transparent 60%), var(--navy-800); }

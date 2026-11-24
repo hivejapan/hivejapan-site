@@ -29,6 +29,8 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     -webkit-mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%);
     mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%); }
   .hive-comb.full { -webkit-mask-image:none; mask-image:none; }
+  /* スマホでは描画しない（負荷対策） */
+  @media (max-width:860px), (pointer:coarse) { .hive-comb { display:none; } }
   .hive-comb canvas { width:100%; height:100%; display:block; }
 </style>
 
@@ -52,6 +54,7 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     onVis = () => this.toggle();
 
     connectedCallback() {
+      if (this.small) return; // スマホでは描画しない
       this.canvas = this.querySelector('canvas')!;
       this.ctx = this.canvas.getContext('2d')!;
       this.R = Number(this.dataset.size) || 34;
@@ -67,6 +70,7 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
       this.resize();
     }
     disconnectedCallback() {
+      if (this.small) return;
       cancelAnimationFrame(this.raf); this.raf = 0;
       this.ro?.disconnect(); this.io?.disconnect();
       document.removeEventListener('visibilitychange', this.onVis);

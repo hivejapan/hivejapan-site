@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Honeycomb from '../components/Honeycomb.astro';
 import Wordmark from '../components/Wordmark.astro';
+import PeopleGrid from '../components/PeopleGrid.astro';
 import { srcset } from '../lib/img';
 import ProgramCard from '../components/ProgramCard.astro';
-import people from '../data/people.json';
 import imgs from '../home-images.json';
 import moments from '../data/moments.json';
 import { getPrograms } from '../lib/programs';
@@ -19,7 +19,7 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
 <Base hero>
   <!-- ===== Hero ===== -->
   <section class="hero" style={`background-image:url(${imgs[0]})`}>
-    <video class="bg" autoplay muted loop playsinline poster={imgs[0]}><source src="/media/top.mp4" type="video/mp4" /></video>
+    <video class="bg" autoplay muted loop playsinline poster={imgs[0]}><source src="/media/top.mp4" type="video/mp4" media="(min-width: 861px)" /></video>
     <div class="tint"></div>
     <Honeycomb size={72} intensity={0.35} interval={4200} />
     <div class="wrap hero-inner">
@@ -93,24 +93,7 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
         </div>
         <a class="textlink" href="/about/#members">メンバー紹介を見る →</a>
       </div>
-      {[
-        { title: 'アドバイザー', list: people.advisors, href: '/about/#advisors' },
-        { title: '運営メンバー', list: people.members, href: '/about/#members' },
-      ].map((g) => (
-        <div class="pgroup">
-          <h3 class="ptitle">{g.title}</h3>
-          <ul class="faces">
-            {g.list.map((p) => (
-              <li class="reveal">
-                <a href={g.href}>
-                  <span class="hexframe">{p.photo && <img src={p.photo} alt="" loading="lazy" />}</span>
-                  <span class="nm">{p.name}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <PeopleGrid />
     </div>
   </section>
 
@@ -130,7 +113,8 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   /* Hero */
   .hero { position:relative; min-height:100svh; display:grid; align-items:center; background:var(--navy-950) center / cover no-repeat; color:#fff; overflow:hidden; }
   .hero .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5; filter:saturate(.7); transform:scale(1.34); /* 動画に焼き込まれた上下の黒帯を隠す */ }
-  @media (max-width:860px) { .hero .bg { filter:none; opacity:.42; } }
+  /* スマホは動画を読み込まずポスター画像のみ（負荷対策） */
+  @media (max-width:860px) { .hero .bg { filter:none; opacity:.42; transform:none; } }
   .tint { position:absolute; inset:0; background:
       radial-gradient(120% 80% at 20% 100%, rgba(5,13,32,.95), transparent 60%),
       linear-gradient(180deg, rgba(10,26,58,.55), rgba(10,26,58,.75) 60%, var(--navy-950)); mix-blend-mode:normal; }
@@ -142,7 +126,7 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   .wordmark span:nth-child(2) { animation-delay:.5s; color:rgba(255,255,255,.9); }
   .sub { margin:22px 0 40px; font-family:var(--font-mincho); font-weight:500; font-size:clamp(1.3rem,3vw,2rem); letter-spacing:.3em; animation:rise 1s .7s var(--ease) both; }
   .cta { display:flex; gap:12px; flex-wrap:wrap; animation:rise 1s .85s var(--ease) both; }
-  .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:.92rem; letter-spacing:var(--ls-body); transition:transform .3s var(--ease), background .3s, color .3s; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:0; text-decoration:none; font-weight:700; font-size:.92rem; letter-spacing:var(--ls-body); transition:transform .3s var(--ease), background .3s, color .3s; }
   .btn.primary { background:var(--honey); color:var(--navy-950); }
   .btn.primary:hover { background:var(--honey-soft); transform:translateY(-2px); }
   .btn.ghost { border:1px solid rgba(255,255,255,.45); color:#fff; }
@@ -173,7 +157,7 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   /* Mosaic */
   .mosaic { padding:0 0 120px; overflow:hidden; }
   .pgrid { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:clamp(120px,15vw,210px); gap:12px; }
-  .pgrid .ph { overflow:hidden; border-radius:14px; background:var(--navy-800); }
+  .pgrid .ph { overflow:hidden; border-radius:0; background:var(--navy-800); }
   .pgrid .p0 { grid-column:span 2; grid-row:span 2; }
   .pgrid .ph img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1s var(--ease); }
   .pgrid .ph:hover img { transform:scale(1.05); }
@@ -200,18 +184,10 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   /* People preview */
   .people { padding:130px 0 110px; }
   .phead { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px 32px; }
-  .pgroup + .pgroup { margin-top:56px; }
-  .ptitle { margin:24px 0 0; font-size:var(--fs-label); font-weight:700; letter-spacing:var(--ls-label); opacity:.72; }
-  .faces { list-style:none; margin:20px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:28px 18px; }
-  .faces a { display:flex; flex-direction:column; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
-  .hexframe { display:block; width:100%; aspect-ratio:1 / 1; border-radius:50%; overflow:hidden; background:var(--navy-700); }
-  .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
-  .faces a:hover img { transform:scale(1.08); }
-  .nm { font-size:.8rem; font-weight:700; text-align:center; line-height:1.5; }
 
   /* Moments */
   .moments { padding:0 0 140px; }
   .mgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .mgrid img { width:100%; aspect-ratio:3 / 2; object-fit:cover; display:block; border-radius:12px; }
+  .mgrid img { width:100%; aspect-ratio:3 / 2; object-fit:cover; display:block; border-radius:0; }
   @media (max-width:860px) { .mgrid { grid-template-columns:repeat(2,1fr); } }
 </style>
