@@ -75,6 +75,7 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
     @keyframes drop { from { opacity:0; transform:translateY(-6px); } }
     .menu-toggle { position:absolute; opacity:0; pointer-events:none; }
     .menu-btn { display:none; }
+    nav.drawer { display:none; }
     @media (max-width:860px) {
       .menu-btn { display:grid; place-items:center; width:44px; height:44px; cursor:pointer; position:relative; z-index:2; }
       .menu-btn span, .menu-btn span::before { display:block; width:22px; height:2px; background:currentColor; border-radius:2px; transition:transform .35s var(--ease); position:relative; }
@@ -82,9 +83,13 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
       .menu-btn span::before { content:""; position:absolute; top:8px; }
       .menu-toggle:checked ~ .menu-btn span { transform:translateY(0) rotate(45deg); }
       .menu-toggle:checked ~ .menu-btn span::before { transform:translateY(-8px) rotate(-90deg); }
-      nav.main { position:fixed; inset:0; background:var(--navy-950); padding:96px 24px 40px; overflow-y:auto; clip-path:circle(0 at calc(100% - 38px) 34px); transition:clip-path .6s var(--ease); visibility:hidden; }
-      .menu-toggle:checked ~ nav.main { clip-path:circle(150% at calc(100% - 38px) 34px); visibility:visible; }
+      /* スマホのメニューはヘッダーの外に置く（ヘッダー内の position:fixed は iOS Safari でヘッダーの高さに閉じ込められるため） */
+      header.site nav.main { display:none; }
+      nav.drawer { display:block; position:fixed; inset:0; z-index:49; background:var(--navy-950); color:var(--on-navy); padding:96px 24px 40px; overflow-y:auto; overscroll-behavior:contain; clip-path:circle(0 at calc(100% - 38px) 34px); transition:clip-path .6s var(--ease), visibility 0s .6s; visibility:hidden; }
+      html:has(.menu-toggle:checked) nav.drawer { clip-path:circle(150% at calc(100% - 38px) 34px); visibility:visible; transition:clip-path .6s var(--ease), visibility 0s; }
       html:has(.menu-toggle:checked) { overflow:hidden; }
+      html:has(.menu-toggle:checked) header.site { box-shadow:none; }
+      html:has(.menu-toggle:checked) header.site::before { opacity:0; }
       nav.main > ul { flex-direction:column; align-items:stretch; gap:6px; font-size:1.15rem; }
       nav.main a, nav.main summary { padding:12px 6px; border-radius:0; border-bottom:1px solid rgba(255,255,255,.08); }
       nav.main .sub { position:static; background:none; border:none; box-shadow:none; padding:4px 0 8px 18px; animation:none; }
@@ -139,6 +144,13 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
       </nav>
     </div>
   </header>
+  <nav class="main drawer" aria-label="メニュー">
+    <ul>
+      {site.nav.map((n) => n.children ? (
+        <li><details><summary><a href={n.href}>{n.label}</a></summary><ul class="sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
+      ) : (<li><a href={n.href}>{n.label}</a></li>))}
+    </ul>
+  </nav>
 
   <main id="content" class={hero ? '' : 'page-pad'} data-hero={hero ? '1' : undefined}>
     <slot />
