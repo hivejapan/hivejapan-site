@@ -53,8 +53,12 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
     .sec-title { font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-section); line-height:1.4; margin:0 0 28px; letter-spacing:var(--ls-head); }
 
     /* ---------- header ---------- */
-    header.site { position:fixed; inset:0 0 auto; z-index:50; color:var(--on-navy); transition:background .4s var(--ease), box-shadow .4s var(--ease); background:rgba(10,26,58,.82); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4); box-shadow:0 1px 0 rgba(255,255,255,.06); }
-    html.on-hero:not(.scrolled) header.site { background:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+    /* 背景のぼかしは ::before に置く。header 自体に backdrop-filter を付けると、
+       スマホのメニュー（position:fixed）がヘッダーの高さに閉じ込められて一部しか表示されない */
+    header.site { position:fixed; inset:0 0 auto; z-index:50; color:var(--on-navy); transition:box-shadow .4s var(--ease); box-shadow:0 1px 0 rgba(255,255,255,.06); }
+    header.site::before { content:""; position:absolute; inset:0; z-index:-1; background:rgba(10,26,58,.82); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4); transition:opacity .4s var(--ease); }
+    html.on-hero:not(.scrolled) header.site { box-shadow:none; }
+    html.on-hero:not(.scrolled) header.site::before { opacity:0; }
     header.site .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; height:68px; }
     .home-link { text-decoration:none; position:relative; z-index:2; top:4px; } /* ロゴ文字の中心をメニュー文字の中心に合わせる */
     nav.main > ul { list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:4px; font-size:.88rem; }

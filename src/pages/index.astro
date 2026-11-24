@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Honeycomb from '../components/Honeycomb.astro';
+import Wordmark from '../components/Wordmark.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import people from '../data/people.json';
 import imgs from '../home-images.json';
@@ -22,7 +23,7 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
     <Honeycomb size={72} intensity={0.35} interval={4200} />
     <div class="wrap hero-inner">
       <p class="eyebrow">誰も知らない「問い」に挑むあなたへ</p>
-      <h1 class="wordmark"><span>HIVE</span><span>JAPAN</span></h1>
+      <h1 class="wordmark" aria-label="HIVE JAPAN"><span><Wordmark word="HIVE" /></span><span><Wordmark word="JAPAN" outline /></span></h1>
       <p class="sub">日本の未来を切り拓く</p>
       <div class="cta">
         {latest && <a class="btn primary" href={latest.href}>{latest.label} を見る</a>}
@@ -87,20 +88,28 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
       <div class="phead">
         <div>
           <p class="kicker">Community</p>
-          <h2 class="sec-title">運営メンバーとアドバイザー</h2>
+          <h2 class="sec-title">アドバイザーと運営メンバー</h2>
         </div>
         <a class="textlink" href="/about/#members">メンバー紹介を見る →</a>
       </div>
-      <ul class="faces">
-        {[...people.advisors, ...people.members].map((p) => (
-          <li class="reveal">
-            <a href="/about/#members">
-              <span class="hexframe">{p.photo && <img src={p.photo} alt="" loading="lazy" />}</span>
-              <span class="nm">{p.name}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      {[
+        { title: 'アドバイザー', list: people.advisors, href: '/about/#advisors' },
+        { title: '運営メンバー', list: people.members, href: '/about/#members' },
+      ].map((g) => (
+        <div class="pgroup">
+          <h3 class="ptitle">{g.title}</h3>
+          <ul class="faces">
+            {g.list.map((p) => (
+              <li class="reveal">
+                <a href={g.href}>
+                  <span class="hexframe">{p.photo && <img src={p.photo} alt="" loading="lazy" />}</span>
+                  <span class="nm">{p.name}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -125,10 +134,10 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
       linear-gradient(180deg, rgba(10,26,58,.55), rgba(10,26,58,.75) 60%, var(--navy-950)); mix-blend-mode:normal; }
   .hero-inner { position:relative; padding-top:120px; padding-bottom:120px; }
   .eyebrow { margin:0 0 18px; font-family:var(--font-mincho); font-weight:500; font-size:clamp(1rem,2vw,1.25rem); letter-spacing:.14em; color:rgba(255,255,255,.9); animation:rise 1s .2s var(--ease) both; }
-  .wordmark { margin:0; font-family:var(--font-en); font-weight:500; font-size:clamp(3.4rem,13vw,10.5rem); line-height:.92; letter-spacing:.04em; display:flex; flex-wrap:wrap; column-gap:.28em; }
+  .wordmark { margin:0; font-family:var(--font-en); font-weight:500; font-size:clamp(3.4rem,13vw,10.5rem); line-height:1; display:flex; flex-wrap:wrap; align-items:flex-end; column-gap:.26em; row-gap:.2em; }
   .wordmark span { display:inline-block; animation:rise 1.1s var(--ease) both; }
   .wordmark span:nth-child(1) { animation-delay:.35s; }
-  .wordmark span:nth-child(2) { animation-delay:.5s; font-weight:400; color:transparent; -webkit-text-stroke:2px rgba(255,255,255,.9); }
+  .wordmark span:nth-child(2) { animation-delay:.5s; color:rgba(255,255,255,.9); }
   .sub { margin:22px 0 40px; font-family:var(--font-mincho); font-weight:500; font-size:clamp(1.3rem,3vw,2rem); letter-spacing:.3em; animation:rise 1s .7s var(--ease) both; }
   .cta { display:flex; gap:12px; flex-wrap:wrap; animation:rise 1s .85s var(--ease) both; }
   .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:.92rem; letter-spacing:var(--ls-body); transition:transform .3s var(--ease), background .3s, color .3s; }
@@ -189,7 +198,9 @@ const rows = [imgs.slice(0, 4), imgs.slice(4, 8)];
   /* People preview */
   .people { padding:130px 0 110px; }
   .phead { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px 32px; }
-  .faces { list-style:none; margin:16px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:28px 18px; }
+  .pgroup + .pgroup { margin-top:56px; }
+  .ptitle { margin:24px 0 0; font-size:var(--fs-label); font-weight:700; letter-spacing:var(--ls-label); opacity:.72; }
+  .faces { list-style:none; margin:20px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:28px 18px; }
   .faces a { display:flex; flex-direction:column; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
   .hexframe { display:block; width:100%; aspect-ratio:1 / 1; border-radius:50%; overflow:hidden; background:var(--navy-700); }
   .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
