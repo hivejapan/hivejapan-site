@@ -88,6 +88,8 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
       nav.drawer { display:block; position:fixed; inset:0; z-index:49; background:var(--navy-950); color:var(--on-navy); padding:96px 24px 40px; overflow-y:auto; overscroll-behavior:contain; clip-path:circle(0 at calc(100% - 38px) 34px); transition:clip-path .6s var(--ease), visibility 0s .6s; visibility:hidden; }
       html:has(.menu-toggle:checked) nav.drawer { clip-path:circle(150% at calc(100% - 38px) 34px); visibility:visible; transition:clip-path .6s var(--ease), visibility 0s; }
       html:has(.menu-toggle:checked) { overflow:hidden; }
+      /* スマホではぼかしをやめて不透明に（スクロール時の負荷対策） */
+      header.site::before { backdrop-filter:none; -webkit-backdrop-filter:none; background:rgba(10,26,58,.97); }
       html:has(.menu-toggle:checked) header.site { box-shadow:none; }
       html:has(.menu-toggle:checked) header.site::before { opacity:0; }
       nav.main > ul { flex-direction:column; align-items:stretch; gap:6px; font-size:1.15rem; }

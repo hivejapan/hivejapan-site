@@ -1,6 +1,7 @@
 ---
 import type { Program } from '../lib/programs';
 import { KIND_LABEL } from '../lib/programs';
+import { srcset } from '../lib/img';
 interface Props { p: Program; size?: 'lg' | 'md' }
 const { p, size = 'md' } = Astro.props;
 const year = p.kind === 'summit' ? String(p.order) : null;
@@ -12,7 +13,7 @@ const year = p.kind === 'summit' ? String(p.order) : null;
 >
   <div class="thumb">
     {p.thumb
-      ? <img src={p.thumb} alt="" loading="lazy" data-vt={`cover-${p.id}`} />
+      ? <img src={p.thumb} srcset={srcset(p.thumb)} sizes={size === 'lg' ? '(max-width:860px) 100vw, 60vw' : '(max-width:860px) 100vw, 33vw'} alt="" loading="lazy" decoding="async" data-vt={`cover-${p.id}`} />
       : <div class="ph" aria-hidden="true"></div>}
     {year && <span class="year">{year}</span>}
   </div>

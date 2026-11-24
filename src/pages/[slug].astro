@@ -4,6 +4,7 @@ import ProgramCard from '../components/ProgramCard.astro';
 import SummitConcept from '../components/SummitConcept.astro';
 import { getCollection, render } from 'astro:content';
 import { getPrograms, KIND_LABEL } from '../lib/programs';
+import { srcset } from '../lib/img';
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
@@ -149,7 +150,7 @@ const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/re
         </dl>
         {d.venue && d.venue.photos.length > 0 && (
           <div class="venue-photos" aria-label="会場の写真">
-            {d.venue.photos.map((src) => <img src={src} alt="" loading="lazy" />)}
+            {d.venue.photos.map((src) => <img src={src} srcset={srcset(src)} sizes="(max-width:860px) 50vw, 33vw" alt="" loading="lazy" decoding="async" />)}
           </div>
         )}
       </div>
@@ -163,7 +164,7 @@ const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/re
         <h2 class="sec-title">合宿を終えて ── メディア掲載</h2>
         {d.press.map((p) => (
           <a class="press-card reveal" href={p.url} target="_blank" rel="noopener">
-            <img src={p.image} alt="" loading="lazy" />
+            <img src={p.image} srcset={srcset(p.image)} sizes="(max-width:860px) 100vw, 40vw" alt="" loading="lazy" decoding="async" />
             <span>{p.label}<em>記事を読む ↗</em></span>
           </a>
         ))}
@@ -179,7 +180,7 @@ const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/re
         <div class="grid">
           {d.photos.map((src, i) => (
             <button class="ph reveal" type="button" data-i={i} style={`transition-delay:${(i % 6) * 60}ms`} aria-label={`写真 ${i + 1} を拡大`}>
-              <img src={src} alt="" loading="lazy" />
+              <img src={src} srcset={srcset(src)} sizes="(max-width:860px) 50vw, 33vw" alt="" loading="lazy" decoding="async" />
             </button>
           ))}
         </div>

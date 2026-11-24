@@ -1,6 +1,7 @@
 ---
 // 一覧ページ用：年度・地域ごとの横長の行（写真つき）
 import type { Program } from '../lib/programs';
+import { srcset } from '../lib/img';
 interface Props { items: Program[]; big?: 'year' | 'label' }
 const { items, big = 'label' } = Astro.props;
 ---
@@ -18,7 +19,7 @@ const { items, big = 'label' } = Astro.props;
           <span class="meta">{[p.date, p.place, p.participants].filter(Boolean).join('　/　')}</span>
         </span>
         <span class="thumb">
-          {p.thumb ? <img src={p.thumb} alt="" loading="lazy" data-vt={`cover-${p.id}`} /> : <span class="ph" aria-hidden="true"></span>}
+          {p.thumb ? <img src={p.thumb} srcset={srcset(p.thumb)} sizes="(max-width:860px) 100vw, 40vw" alt="" loading="lazy" decoding="async" data-vt={`cover-${p.id}`} /> : <span class="ph" aria-hidden="true"></span>}
         </span>
         <span class="go" aria-hidden="true">→</span>
       </a>
