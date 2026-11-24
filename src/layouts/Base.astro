@@ -69,7 +69,14 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
     nav.main details[open] summary::after { transform:translateY(0) rotate(-135deg); }
     nav.main summary a { display:inline; padding:0; border:none; border-radius:0; background:none; opacity:1; }
     nav.main summary a:hover { background:none; }
-    nav.main a:hover, nav.main summary:hover, nav.main details[open] summary { opacity:1; background:rgba(255,255,255,.08); }
+    nav.main a:hover, nav.main summary:hover, nav.main details[open] summary { opacity:1; }
+    /* PCのメニュー：黄色い下線が項目間をスライド。表示中のページの下に戻る */
+    header.site nav.main { position:relative; }
+    header.site nav.main > ul > li > a:hover, header.site nav.main summary:hover, header.site nav.main details[open] summary { background:none; }
+    header.site nav.main > ul > li.is-current > a, header.site nav.main > ul > li.is-current summary { opacity:1; }
+    nav.main .sub a:hover { background:rgba(255,255,255,.08); }
+    .nav-line { position:absolute; left:0; bottom:2px; width:1px; height:2px; background:var(--honey); transform-origin:0 0; opacity:0; pointer-events:none; }
+    .nav-line.ready { transition:transform .4s var(--ease), opacity .25s; }
     nav.main .sub { list-style:none; margin:0; padding:8px; position:absolute; top:calc(100% + 10px); left:0; min-width:220px; background:var(--navy-900); border:1px solid rgba(255,255,255,.1); border-radius:0; box-shadow:0 20px 40px -12px rgba(0,0,0,.5); animation:drop .25s var(--ease); }
     nav.main .sub a { border-radius:0; padding:9px 14px; }
     @keyframes drop { from { opacity:0; transform:translateY(-6px); } }
@@ -138,6 +145,7 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
       <input type="checkbox" id="menu" class="menu-toggle" />
       <label for="menu" class="menu-btn" aria-label="メニュー"><span></span></label>
       <nav class="main" aria-label="メイン">
+        <span class="nav-line" aria-hidden="true"></span>
         <ul>
           {site.nav.map((n) => n.children ? (
             <li><details><summary><a href={n.href}>{n.label}</a></summary><ul class="sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul></details></li>
@@ -185,7 +193,38 @@ const fullTitle = title ? `${title} | HIVE JAPAN` : 'HIVE JAPAN';
   <script>
     // ヘッダー状態・メニュー・スクロール表示（ページ遷移のたびに実行）
     let io: IntersectionObserver | undefined;
+    // PCメニューのスライドする下線
+    function setupNavLine() {
+      const nav = document.querySelector('header.site nav.main') as HTMLElement | null;
+      const line = nav?.querySelector('.nav-line') as HTMLElement | null;
+      if (!nav || !line) return;
+      const items = Array.from(nav.querySelectorAll(':scope > ul > li')) as HTMLElement[];
+      const path = location.pathname;
+      const hit = (h: string | null) => !!h && h.startsWith('/') && (h === path || (h !== '/' && path.startsWith(h)));
+      items.forEach((li) => li.classList.toggle('is-current', Array.from(li.querySelectorAll('a')).some((a) => hit(a.getAttribute('href')))));
+      const target = (li: HTMLElement) => (li.querySelector(':scope > a, :scope > details > summary') as HTMLElement | null);
+      const moveTo = (li?: HTMLElement | null) => {
+        const el = li && target(li);
+        if (!el) { line.style.opacity = '0'; return; }
+        const n = nav.getBoundingClientRect(), r = el.getBoundingClientRect();
+        const pad = 14, w = Math.max(r.width - pad * 2, 1);
+        line.style.transform = `translateX(${r.left - n.left + pad}px) scaleX(${w})`;
+        line.style.opacity = '1';
+      };
+      const rest = () => moveTo(items.find((li) => li.classList.contains('is-current')));
+      if (!nav.dataset.lineReady) {
+        nav.dataset.lineReady = '1';
+        items.forEach((li) => { li.addEventListener('mouseenter', () => moveTo(li)); li.addEventListener('focusin', () => moveTo(li)); });
+        nav.addEventListener('mouseleave', rest);
+        nav.addEventListener('focusout', (e) => { if (!nav.contains((e as FocusEvent).relatedTarget as Node)) rest(); });
+        window.addEventListener('resize', () => (window as any).__hiveNavRest?.());
+      }
+      (window as any).__hiveNavRest = rest;
+      rest();
+      if (!line.classList.contains('ready')) { void line.offsetWidth; line.classList.add('ready'); document.fonts?.ready.then(rest); }
+    }
     function setup() {
+      setupNavLine();
       const root = document.documentElement;
       const onHero = !!document.querySelector('main[data-hero]');
       root.classList.toggle('on-hero', onHero);
