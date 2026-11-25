@@ -1,6 +1,7 @@
 ---
 import type { Program } from '../lib/programs';
 import { KIND_LABEL } from '../lib/programs';
+import { srcset } from '../lib/img';
 interface Props { p: Program; size?: 'lg' | 'md' }
 const { p, size = 'md' } = Astro.props;
 const year = p.kind === 'summit' ? String(p.order) : null;
@@ -12,7 +13,7 @@ const year = p.kind === 'summit' ? String(p.order) : null;
 >
   <div class="thumb">
     {p.thumb
-      ? <img src={p.thumb} alt="" loading="lazy" data-vt={`cover-${p.id}`} />
+      ? <img src={p.thumb} srcset={srcset(p.thumb)} sizes={size === 'lg' ? '(max-width:860px) 100vw, 60vw' : '(max-width:860px) 100vw, 33vw'} alt="" loading="lazy" decoding="async" data-vt={`cover-${p.id}`} />
       : <div class="ph" aria-hidden="true"></div>}
     {year && <span class="year">{year}</span>}
   </div>
@@ -25,7 +26,7 @@ const year = p.kind === 'summit' ? String(p.order) : null;
   <span class="go" aria-hidden="true">→</span>
 </a>
 <style>
-  .pcard { --r:18px; position:relative; display:flex; flex-direction:column; text-decoration:none; color:var(--on-navy); background:var(--navy-800); border-radius:var(--r); overflow:hidden; isolation:isolate; transition:transform .5s var(--ease), box-shadow .5s var(--ease); box-shadow:0 1px 0 rgba(255,255,255,.06) inset; height:100%; }
+  .pcard { --r:18px; position:relative; display:flex; flex-direction:column; text-decoration:none; color:var(--on-navy); background:var(--navy-800); border-radius:0; overflow:hidden; isolation:isolate; transition:transform .5s var(--ease), box-shadow .5s var(--ease); box-shadow:0 1px 0 rgba(255,255,255,.06) inset; height:100%; }
   .pcard:hover { transform:translateY(-6px); box-shadow:0 30px 50px -24px rgba(0,0,0,.6), 0 0 0 1px rgba(233,180,76,.45) inset; }
   .thumb { position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--navy-700); }
   /* 最新回：横長の大きなカード */
@@ -56,4 +57,6 @@ const year = p.kind === 'summit' ? String(p.order) : null;
   .go { position:absolute; right:18px; bottom:18px; width:36px; height:36px; display:grid; place-items:center; border-radius:50%; background:rgba(255,255,255,.08); color:var(--honey); transition:background .4s, color .4s, transform .5s var(--ease); }
   .pcard:hover .go { background:var(--honey); color:var(--navy-900); transform:translateX(3px); }
   @media (prefers-reduced-motion: reduce) { .ph { animation:none; } }
+  /* スマホは写真フィルターと柄のアニメーションを止める（負荷対策） */
+  @media (max-width:860px) { .thumb img { filter:none; transition:none; } .ph { animation:none; } }
 </style>

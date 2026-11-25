@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import people from '../data/people.json';
+import PeopleGrid from '../components/PeopleGrid.astro';
 import imgs from '../home-images.json';
 ---
 <Base title="About" hero>
@@ -32,34 +32,12 @@ import imgs from '../home-images.json';
     </div>
   </section>
 
-  <!-- ===== Advisors ===== -->
+  <!-- ===== アドバイザー・運営メンバー（トップと同じ構成。写真を押すとプロフィール） ===== -->
   <section class="people">
     <div class="wrap">
-      <div class="advisors">
-        {people.advisors.map((p) => (
-          <article class="advisor reveal">
-            {p.photo && <div class="hexframe lg"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
-            <div>
-              <h3>{p.name}</h3>
-              <p class="role">{p.role}</p>
-              <p class="bio">{p.bio}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <h2 class="sec-title" id="members" style="margin-top:110px">運営メンバー</h2>
-      <div class="members">
-        {people.members.map((p) => (
-          <article class="member reveal">
-            {p.photo && <div class="hexframe"><img src={p.photo} alt={p.name} loading="lazy" /></div>}
-            <h3>{p.name}</h3>
-            {p.role && <p class="role">{p.role}</p>}
-            {p.tags && <p class="tags">{p.tags.split(/\s+/).filter(Boolean).map((t) => <span>{t}</span>)}</p>}
-            {p.bio && <p class="bio">{p.bio}</p>}
-          </article>
-        ))}
-      </div>
+      <p class="kicker">Community</p>
+      <h2 class="sec-title">アドバイザーと運営メンバー</h2>
+      <PeopleGrid mode="profile" />
     </div>
   </section>
 </Base>
@@ -78,30 +56,11 @@ import imgs from '../home-images.json';
   .ntext { margin:0; font-size:1.06rem; line-height:2.2; }
 
   .people { padding:130px 0 140px; }
-  .advisors { display:grid; gap:28px; }
-  .advisor { display:grid; grid-template-columns:180px 1fr; gap:40px; align-items:start; background:var(--card); border-radius:22px; padding:36px; box-shadow:0 20px 40px -30px rgba(10,26,58,.35); }
-  .hexframe { aspect-ratio:3 / 4; border-radius:14px; overflow:hidden; background:var(--navy-700); }
-  .hexframe img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
-  .advisor:hover .hexframe img, .member:hover .hexframe img { transform:scale(1.06); }
-  .people h3 { margin:0 0 4px; font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-card); letter-spacing:var(--ls-head); color:var(--navy-900); }
-  .role { margin:0 0 12px; color:var(--muted); font-size:.84rem; line-height:1.7; }
-  .bio { margin:0; font-size:.9rem; line-height:1.95; }
-  .members { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:48px 28px; align-items:start; }
-  .member .hexframe { width:100%; margin:0 0 18px; }
-  .tags { margin:4px 0 0; display:flex; flex-wrap:wrap; gap:6px; }
-  .tags span { font-size:.72rem; padding:2px 10px; border-radius:999px; background:rgba(10,26,58,.06); color:var(--navy-700); }
-  .member .bio { margin-top:14px; font-size:.86rem; }
 
   @media (max-width:860px) {
     .grid { grid-template-columns:1fr; gap:32px; }
     .mission { padding:88px 0 64px; }
     .mission .head { position:static; }
     .mtitle br { display:none; }
-  }
-  @media (max-width:700px) {
-    .advisor { grid-template-columns:1fr; gap:20px; padding:24px; }
-    .advisor .hexframe { width:150px; }
-    .members { grid-template-columns:1fr 1fr; gap:36px 16px; }
-    .member .hexframe { width:100%; }
   }
 </style>

@@ -1,0 +1,100 @@
+---
+// アドバイザー／運営メンバーの顔写真グリッド（トップと About で共通）
+// mode="link": 写真を押すと About へ / mode="profile": 写真を押すとプロフィールを表示
+import people from '../data/people.json';
+interface Props { mode?: 'link' | 'profile' }
+const { mode = 'link' } = Astro.props;
+type Person = { name: string; role?: string; bio?: string; tags?: string; photo?: string };
+const groups: { id: string; title: string; list: Person[] }[] = [
+  { id: 'advisors', title: 'アドバイザー', list: people.advisors },
+  { id: 'members', title: '運営メンバー', list: people.members },
+];
+---
+{groups.map((g) => (
+  <div class="pgroup" id={mode === 'profile' ? g.id : undefined}>
+    <h3 class="ptitle">{g.title}</h3>
+    <ul class="faces">
+      {g.list.map((p, i) => (
+        <li class="reveal">
+          {mode === 'link' ? (
+            <a class="face" href={`/about/#${g.id}`}>
+              <span class="photo">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" />}</span>
+              <span class="nm">{p.name}</span>
+            </a>
+          ) : (
+            <button class="face" type="button" data-person={`${g.id}-${i}`} aria-haspopup="dialog">
+              <span class="photo">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" />}</span>
+              <span class="nm">{p.name}</span>
+              {p.role && <span class="rl">{p.role}</span>}
+            </button>
+          )}
+          {mode === 'profile' && (
+            <template data-profile={`${g.id}-${i}`}>
+              {p.photo && <img class="pp" src={p.photo} alt="" />}
+              <div>
+                <h4>{p.name}</h4>
+                {p.role && <p class="prole">{p.role}</p>}
+                {p.tags && <p class="ptags">{p.tags}</p>}
+                {p.bio && <p class="pbio">{p.bio}</p>}
+              </div>
+            </template>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
+{mode === 'profile' && (
+  <dialog class="profile">
+    <div class="pbody"></div>
+    <button class="pclose" type="button" aria-label="閉じる">×</button>
+  </dialog>
+)}
+
+<style>
+  .pgroup { scroll-margin-top:90px; }
+  .pgroup + .pgroup { margin-top:56px; }
+  .ptitle { margin:24px 0 0; font-size:var(--fs-label); font-weight:700; letter-spacing:var(--ls-label); opacity:.72; }
+  .faces { list-style:none; margin:20px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:28px 18px; align-items:start; }
+  .face { all:unset; box-sizing:border-box; width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; text-decoration:none; color:var(--ink); cursor:pointer; text-align:center; }
+  .face:focus-visible { outline:2px solid var(--honey); outline-offset:4px; }
+  .photo { display:block; width:100%; aspect-ratio:1 / 1; border-radius:50%; overflow:hidden; background:var(--navy-700); }
+  .photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
+  .face:hover img { transform:scale(1.08); }
+  .nm { font-size:.8rem; font-weight:700; line-height:1.5; }
+  .rl { margin-top:-6px; font-size:.7rem; line-height:1.6; color:var(--muted); }
+
+  .profile { width:min(640px, 92vw); max-height:86vh; padding:0; border:0; border-radius:0; background:var(--paper); color:var(--ink); overflow:auto; }
+  .profile::backdrop { background:rgba(5,13,32,.72); }
+  .pbody { display:grid; grid-template-columns:140px 1fr; gap:28px; padding:40px 36px 36px; }
+  .pbody :global(.pp) { width:140px; aspect-ratio:1 / 1; object-fit:cover; border-radius:50%; }
+  .pbody :global(h4) { margin:0 0 4px; font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-card); letter-spacing:var(--ls-head); color:var(--navy-900); }
+  .pbody :global(.prole) { margin:0 0 10px; color:var(--muted); font-size:.84rem; line-height:1.7; }
+  .pbody :global(.ptags) { margin:0 0 12px; font-size:.78rem; color:var(--navy-700); }
+  .pbody :global(.pbio) { margin:0; font-size:.9rem; line-height:1.95; }
+  .pclose { position:absolute; top:10px; right:12px; width:40px; height:40px; border:0; background:none; font-size:1.6rem; color:var(--navy-900); cursor:pointer; }
+  @media (max-width:600px) {
+    .pbody { grid-template-columns:1fr; gap:18px; padding:48px 22px 28px; }
+    .pbody :global(.pp) { width:110px; }
+  }
+</style>
+
+<script>
+  function setupProfiles() {
+    const dlg = document.querySelector('dialog.profile') as HTMLDialogElement | null;
+    if (!dlg || dlg.dataset.ready) return;
+    dlg.dataset.ready = '1';
+    const body = dlg.querySelector('.pbody')!;
+    document.querySelectorAll<HTMLButtonElement>('button.face[data-person]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const t = document.querySelector(`template[data-profile="${b.dataset.person}"]`) as HTMLTemplateElement | null;
+        if (!t) return;
+        body.replaceChildren(t.content.cloneNode(true));
+        dlg.showModal();
+      });
+    });
+    dlg.querySelector('.pclose')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+  document.addEventListener('astro:page-load', setupProfiles);
+</script>

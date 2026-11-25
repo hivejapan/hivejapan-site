@@ -29,6 +29,8 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     -webkit-mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%);
     mask-image:linear-gradient(100deg, transparent 15%, rgba(0,0,0,.5) 45%, #000 75%); }
   .hive-comb.full { -webkit-mask-image:none; mask-image:none; }
+  /* スマホでは描画しない（負荷対策） */
+  @media (max-width:860px), (pointer:coarse) { .hive-comb { display:none; } }
   .hive-comb canvas { width:100%; height:100%; display:block; }
 </style>
 
@@ -42,19 +44,23 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     R = 34; k = 1; interval = 1600; interactive = true;
     w = 0; h = 0; dpr = 1; cols = 0; rows = 0;
     waves: Wave[] = [];
-    raf = 0; visible = false; lastSpawn = 0; lastCell = '';
+    raf = 0; visible = false; lastSpawn = 0; lastCell = ''; lastDraw = 0;
+    // スマホは描画を間引いて負荷を下げる（PC 30fps / スマホ 20fps）
+    small = matchMedia('(max-width: 860px), (pointer: coarse)').matches;
+    frameMs = this.small ? 50 : 33;
     ro?: ResizeObserver; io?: IntersectionObserver;
     reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     onMove = (e: PointerEvent) => this.pointer(e);
     onVis = () => this.toggle();
 
     connectedCallback() {
+      if (this.small) return; // スマホでは描画しない
       this.canvas = this.querySelector('canvas')!;
       this.ctx = this.canvas.getContext('2d')!;
       this.R = Number(this.dataset.size) || 34;
       this.k = Number(this.dataset.intensity) || 1;
       this.interval = Number(this.dataset.interval) || 1600;
-      this.interactive = this.dataset.interactive === '1';
+      this.interactive = this.dataset.interactive === '1' && !this.small;
       this.ro = new ResizeObserver(() => this.resize());
       this.ro.observe(this);
       this.io = new IntersectionObserver(([en]) => { this.visible = en.isIntersecting; this.toggle(); });
@@ -64,6 +70,7 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
       this.resize();
     }
     disconnectedCallback() {
+      if (this.small) return;
       cancelAnimationFrame(this.raf); this.raf = 0;
       this.ro?.disconnect(); this.io?.disconnect();
       document.removeEventListener('visibilitychange', this.onVis);
@@ -71,7 +78,7 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     }
     resize() {
       const r = this.getBoundingClientRect();
-      this.dpr = Math.min(devicePixelRatio || 1, 2);
+      this.dpr = Math.min(devicePixelRatio || 1, this.small ? 1.5 : 2);
       this.w = r.width; this.h = r.height;
       this.canvas.width = Math.round(this.w * this.dpr);
       this.canvas.height = Math.round(this.h * this.dpr);
@@ -85,7 +92,10 @@ const { size = 34, intensity = 1, interval = 1600, interactive = true, class: cl
     toggle() {
       const run = this.visible && !document.hidden && !this.reduce;
       if (run && !this.raf) {
-        const loop = (t: number) => { this.draw(t); this.raf = requestAnimationFrame(loop); };
+        const loop = (t: number) => {
+          if (t - this.lastDraw >= this.frameMs) { this.lastDraw = t; this.draw(t); }
+          this.raf = requestAnimationFrame(loop);
+        };
         this.raf = requestAnimationFrame(loop);
       } else if (!run && this.raf) { cancelAnimationFrame(this.raf); this.raf = 0; }
     }
