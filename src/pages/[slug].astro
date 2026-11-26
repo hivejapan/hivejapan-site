@@ -65,7 +65,16 @@ const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/re
             <p class="theme-text">{d.about.theme}</p>
           </div>
         )}
-        <div class="text">{d.about.text.map((t) => <p>{t}</p>)}</div>
+        {d.about.poster ? (
+          <div class="with-poster">
+            <div class="text">{d.about.text.map((t) => <p>{t}</p>)}</div>
+            <a class="poster reveal" href={d.about.poster} target="_blank" rel="noopener" aria-label="ポスターを拡大して見る">
+              <img src={d.about.poster} srcset={srcset(d.about.poster)} sizes="(max-width:760px) 80vw, 300px" alt={`${d.title} ポスター`} loading="lazy" decoding="async" />
+            </a>
+          </div>
+        ) : (
+          <div class="text">{d.about.text.map((t) => <p>{t}</p>)}</div>
+        )}
 
         {d.report && (
           <a class="report-card reveal" href={d.report.href}>
@@ -265,6 +274,11 @@ const listHref = d.kind === 'summit' ? '/summit/' : d.kind === 'regional' ? '/re
   .theme-label { margin:0 0 6px; font-size:var(--fs-label); font-weight:700; letter-spacing:var(--ls-label); color:var(--muted); }
   .theme-text { margin:0; font-family:var(--font-mincho); font-weight:500; font-size:var(--fs-section); line-height:1.5; letter-spacing:var(--ls-head); color:var(--navy-900); }
   .text p { margin:0 0 1.2em; font-size:1.04rem; }
+  .with-poster { display:grid; grid-template-columns:1fr 280px; gap:48px; align-items:start; }
+  .poster { display:block; box-shadow:0 24px 40px -24px rgba(10,26,58,.45); transition:transform .4s var(--ease); }
+  .poster:hover { transform:translateY(-4px); }
+  .poster img { display:block; width:100%; height:auto; aspect-ratio:1076 / 1522; }
+  @media (max-width:760px) { .with-poster { grid-template-columns:1fr; gap:32px; } .poster { width:min(320px,80%); margin:0 auto; } }
   .report-card { display:grid; gap:8px; margin-top:44px; padding:28px 32px; border-radius:0; text-decoration:none; color:var(--on-navy); background:var(--navy-900); transition:transform .4s var(--ease), box-shadow .4s; }
   .report-card:hover { transform:translateY(-4px); box-shadow:0 24px 40px -20px rgba(10,26,58,.6); }
   .rc-k { font-family:var(--font-en); font-size:var(--fs-label); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--honey); }

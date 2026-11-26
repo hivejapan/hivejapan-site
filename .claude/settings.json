@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s https://hivejapan.org/)",
+      "Bash(curl -s https://hivejapan.org/about/)",
+      "Bash(mdfind -name \"IMG_6990\")",
+      "Read(//Users/joyakosuke/Downloads/**)"
+    ]
+  }
+}

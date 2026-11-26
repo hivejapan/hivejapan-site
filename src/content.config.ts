@@ -29,6 +29,7 @@ const pages = defineCollection({
       heading: z.string(), // 例: HIVE JAPAN SUMMIT 2025とは
       theme: z.string().optional(), // テーマ（見出しの下に大きく）
       text: z.array(z.string()).default([]), // 説明文（段落ごと）
+      poster: z.string().optional(), // ポスター画像（説明文の横に切らずに表示）
     }).optional(),
     report: z.object({ href: z.string(), title: z.string(), author: z.string(), lead: z.string() }).optional(),
     guests: z.array(guest).default([]),
