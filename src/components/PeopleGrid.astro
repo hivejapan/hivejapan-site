@@ -9,22 +9,27 @@ const groups: { id: string; title: string; list: Person[] }[] = [
   { id: 'advisors', title: 'アドバイザー', list: people.advisors },
   { id: 'members', title: '運営メンバー', list: people.members },
 ];
+// 「堀拓人 (Takuto Hori)」→ 日本語とローマ字に分けて、ローマ字は必ず次の行に出す
+const splitName = (name: string) => {
+  const m = name.match(/^(.*?)\s*[（(]([^）)]+)[）)]\s*$/);
+  return m ? { ja: m[1], en: m[2] } : { ja: name, en: '' };
+};
 ---
 {groups.map((g) => (
   <div class="pgroup" id={mode === 'profile' ? g.id : undefined}>
     <h3 class="ptitle">{g.title}</h3>
     <ul class="faces">
-      {g.list.map((p, i) => (
+      {g.list.map((p, i) => { const n = splitName(p.name); return (
         <li class="reveal">
           {mode === 'link' ? (
             <a class="face" href={`/about/#${g.id}`}>
               <span class="photo">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" />}</span>
-              <span class="nm">{p.name}</span>
+              <span class="nm">{n.ja}{n.en && <span class="en">{n.en}</span>}</span>
             </a>
           ) : (
             <button class="face" type="button" data-person={`${g.id}-${i}`} aria-haspopup="dialog">
               <span class="photo">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" />}</span>
-              <span class="nm">{p.name}</span>
+              <span class="nm">{n.ja}{n.en && <span class="en">{n.en}</span>}</span>
               {p.role && <span class="rl">{p.role}</span>}
             </button>
           )}
@@ -32,7 +37,7 @@ const groups: { id: string; title: string; list: Person[] }[] = [
             <template data-profile={`${g.id}-${i}`}>
               {p.photo && <img class="pp" src={p.photo} alt="" />}
               <div>
-                <h4>{p.name}</h4>
+                <h4>{n.ja}{n.en && <span class="en">{n.en}</span>}</h4>
                 {p.role && <p class="prole">{p.role}</p>}
                 {p.tags && <p class="ptags">{p.tags}</p>}
                 {p.bio && <p class="pbio">{p.bio}</p>}
@@ -40,7 +45,7 @@ const groups: { id: string; title: string; list: Person[] }[] = [
             </template>
           )}
         </li>
-      ))}
+      ); })}
     </ul>
   </div>
 ))}
@@ -62,6 +67,8 @@ const groups: { id: string; title: string; list: Person[] }[] = [
   .photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease); }
   .face:hover img { transform:scale(1.08); }
   .nm { font-size:.8rem; font-weight:700; line-height:1.5; }
+  .en { display:block; font-weight:400; font-size:.92em; }
+  .pbody :global(h4 .en) { display:block; margin-top:2px; font-family:var(--font-en); font-size:.6em; color:var(--muted); }
   .rl { margin-top:-6px; font-size:.7rem; line-height:1.6; color:var(--muted); }
 
   .profile { width:min(640px, 92vw); max-height:86vh; padding:0; border:0; border-radius:0; background:var(--paper); color:var(--ink); overflow:auto; }
